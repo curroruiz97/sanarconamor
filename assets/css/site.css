@@ -393,7 +393,10 @@ img { display: block; }
   will-change: transform;
 }
 
-.media img {
+/* El hero no usa .media pero necesita el mismo encaje: sin esta regla su
+   imagen se pinta a tamaño natural y solo se ve un trozo ampliado. */
+.media img,
+.hero-a__media img {
   position: absolute;
   inset: 0;
   width: 100%;

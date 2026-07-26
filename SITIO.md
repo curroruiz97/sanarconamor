@@ -85,6 +85,18 @@ En `assets/img/` solo va lo que se sirve, al tamaño en que se muestra. Los
 originales están en `fuentes/`, fuera del despliegue, para poder rehacer
 cualquier recorte.
 
+**Foto del hero** — se sirve con `<picture>` y tres juegos de recortes del
+mismo original: 4:5 hasta 700 px, 16:10 hasta 1100 y 16:9 por encima. En
+vertical el hueco del hero es casi cuadrado, y con un solo panorámico solo se
+vería una franja del centro. El `srcset` evita además que un móvil descargue la
+versión de escritorio.
+
+Ojo con una cosa: el contenedor del hero es `.hero-a__media`, no `.media`, así
+que necesita su propia línea en la regla que aplica `object-fit: cover`. Sin
+ella la imagen se pinta a tamaño natural y solo se ve un trozo ampliado de la
+esquina —y no se nota en local si las fotos remotas están bloqueadas, porque
+entonces el hueco queda vacío.
+
 **Retrato de Rosa Elena** — de `fuentes/rosa-elena.jpg` (1200×1600) salen:
 
 - `rosa-elena.jpg` / `.webp` — 1000 px de ancho, para «Sobre mí» y la ficha
