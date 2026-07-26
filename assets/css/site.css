@@ -530,6 +530,7 @@ img { display: block; }
 .logo {
   display: flex;
   align-items: stretch;
+  flex: none;
   gap: 12px;
   width: max-content;
   line-height: .95;
@@ -575,6 +576,7 @@ img { display: block; }
   font-size: 9.5px;
   letter-spacing: .36em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--sage-dim);
   margin-top: 5px;
   transition: color .4s ease;
@@ -724,7 +726,54 @@ img { display: block; }
   .nav__links,
   .nav-cta { display: none; }
 
-  .nav__burger { display: flex; }
+  .nav__burger { display: flex; flex: none; }
+}
+
+/* A partir de aquí la marca a tamaño completo no deja sitio al botón de menú:
+   se reduce el conjunto manteniendo sus proporciones. */
+@media (max-width: 560px) {
+  .nav__inner { gap: 12px; padding-top: 15px; padding-bottom: 15px; }
+
+  .logo { gap: 8px; }
+  .logo__mark { height: 29px; }
+  .logo__name { font-size: 18px; }
+
+  .logo__sub {
+    font-size: 7.5px;
+    letter-spacing: .28em;
+    margin-top: 4px;
+  }
+
+  /* Se estrecha, no se achata: el alto se mantiene para que siga siendo
+     cómodo de pulsar. */
+  .nav__burger {
+    gap: 8px;
+    padding: 13px 14px;
+    font-size: 10px;
+    letter-spacing: .14em;
+  }
+
+  .nav__burger-lines span { width: 14px; }
+}
+
+/* En las pantallas más estrechas ni siquiera cabe la palabra: queda el icono,
+   con el rótulo accesible para los lectores de pantalla. */
+@media (max-width: 380px) {
+  .nav__burger {
+    padding: 13px;
+    min-height: 39px;
+  }
+
+  .nav__burger-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }
 
 /* --------------------------------------------------------------------------
