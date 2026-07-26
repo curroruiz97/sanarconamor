@@ -4,16 +4,10 @@ Web profesional de **Sanar con Amor**, preparada para publicarse desde GitHub en
 
 ## Desarrollo local
 
-```bash
-npm run dev
-```
-
-Abre `http://localhost:4173`.
-
-## Validación
+Al ser una web estática, puedes abrir `index.html` directamente o servir la carpeta con cualquier servidor local, por ejemplo:
 
 ```bash
-npm run check
+npx serve .
 ```
 
 ## Despliegue en Vercel
@@ -23,18 +17,15 @@ npm run check
 3. Deja vacíos Build Command y Output Directory.
 4. Pulsa **Deploy**.
 
-El proyecto no requiere variables de entorno ni servicios externos para mostrar la web. Las solicitudes de cita se preparan en el navegador y se envían mediante Instagram o Facebook.
+No necesita variables de entorno. El formulario prepara una solicitud, copia el texto y abre el perfil de Instagram para enviarla.
 
 ## Estructura
 
-- `index.html`: contenido, interacciones y metadatos SEO.
-- `assets/runtime`: motor de la interfaz original.
-- `assets/vendor`: React y ReactDOM servidos localmente.
-- `assets/fonts`: tipografía Archivo.
-- `assets/images`: ilustraciones temporales de marca.
-- `vercel.json`: caché y cabeceras de seguridad.
-- `scripts`: servidor local y comprobaciones.
+- `index.html`: contenido, estilos, interacciones y metadatos SEO.
+- `favicon.svg`: icono de la web.
+- `robots.txt`: directivas básicas para buscadores.
+- `vercel.json`: configuración y cabeceras de seguridad.
 
-## Contenido pendiente antes del dominio definitivo
+## Antes del dominio definitivo
 
-Sustituir las ilustraciones temporales por fotografías propias de Rosa Elena, confirmar dirección presencial, tarifas, política de privacidad y datos legales del titular.
+Conviene sustituir las ilustraciones provisionales por fotografías profesionales de Rosa Elena y confirmar dirección presencial, tarifas, política de privacidad, aviso legal y datos del titular.
