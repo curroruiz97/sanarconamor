@@ -423,6 +423,91 @@ img { display: block; }
 
 .preloader__marquee { overflow: hidden; padding: 6px 0; }
 
+.preloader__center {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 24px 0;
+}
+
+/* ── El loto que se llena mientras carga ──────────────────────────────────
+   Tres capas recortadas con la silueta del loto: el contorno apagado, el
+   relleno que sube al ritmo del contador y una línea de luz en el borde del
+   relleno. --p lo va moviendo el JS de 0% a 100%. */
+
+.pre-mark {
+  position: relative;
+  width: clamp(150px, 26vw, 280px);
+  aspect-ratio: 550 / 360;
+  --p: 0%;
+  --lotus: url('/assets/img/lotus-mark.png');
+}
+
+/* Sin soporte de máscaras se ve el loto tal cual, quieto pero digno. */
+.pre-mark {
+  background: var(--lotus) center / contain no-repeat;
+  opacity: .17;
+}
+
+.pre-mark__layer { display: none; }
+
+@supports (mask-image: url('/assets/img/lotus-mark.png')) or
+          (-webkit-mask-image: url('/assets/img/lotus-mark.png')) {
+  .pre-mark { background: none; opacity: 1; }
+
+  .pre-mark__layer {
+    display: block;
+    position: absolute;
+    inset: 0;
+    -webkit-mask: var(--lotus) center / contain no-repeat;
+    mask: var(--lotus) center / contain no-repeat;
+  }
+}
+
+.pre-mark__ghost {
+  background: rgba(241, 240, 234, .13);
+  transition: background .5s ease;
+}
+
+.pre-mark__fill {
+  background: linear-gradient(
+    180deg,
+    #F1F0EA 0%,
+    #DDE2D2 34%,
+    #B7C1A5 68%,
+    #6E7A5A 100%
+  );
+  clip-path: inset(calc(100% - var(--p)) 0 0 0);
+}
+
+/* Línea de luz justo en el borde del relleno. Sin blur a propósito: un filtro
+   sobre una capa enmascarada rompe la máscara en Chromium y deja un rectángulo. */
+.pre-mark__edge {
+  background: #FFFFFF;
+  clip-path: inset(calc(100% - var(--p)) 0 max(0%, calc(var(--p) - 3.2%)) 0);
+  opacity: .75;
+}
+
+/* Al llegar a 100 el loto respira una vez antes de que suba la cortina. */
+.pre-mark.is-full {
+  animation: scam-bloom .55s var(--ease) both;
+}
+
+.pre-mark.is-full .pre-mark__ghost { background: rgba(241, 240, 234, .28); }
+.pre-mark.is-full .pre-mark__edge { opacity: 0; transition: opacity .4s ease; }
+
+@keyframes scam-bloom {
+  0% { transform: scale(1); filter: brightness(1); }
+  45% { transform: scale(1.045); filter: brightness(1.18); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pre-mark.is-full { animation: none; }
+  .pre-mark__edge { display: none; }
+}
+
 .preloader__bottom {
   display: flex;
   align-items: flex-end;

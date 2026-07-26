@@ -29,19 +29,31 @@
     try { seen = !!sessionStorage.getItem('scam-preloaded'); } catch (e) { /* sin storage */ }
     if (seen) { pre.style.display = 'none'; return; }
 
+    var marca = $('#pre-mark');
     var t0 = performance.now();
     var dur = 1700;
 
     var step = function (t) {
       var p = Math.min(1, (t - t0) / dur);
-      if (num) num.textContent = pad2(Math.round(easeOutCubic(p) * 100));
+      var avance = easeOutCubic(p);
+
+      if (num) num.textContent = pad2(Math.round(avance * 100));
+      // El loto se llena al mismo ritmo que sube el contador.
+      if (marca) marca.style.setProperty('--p', (avance * 100).toFixed(2) + '%');
+
       if (p < 1) {
         requestAnimationFrame(step);
         return;
       }
+
       try { sessionStorage.setItem('scam-preloaded', '1'); } catch (e) { /* sin storage */ }
-      pre.classList.add('is-gone');
-      setTimeout(function () { pre.style.display = 'none'; }, 1000);
+
+      // Un respiro con el loto lleno antes de que suba la cortina.
+      if (marca) marca.classList.add('is-full');
+      setTimeout(function () {
+        pre.classList.add('is-gone');
+        setTimeout(function () { pre.style.display = 'none'; }, 1000);
+      }, 430);
     };
 
     requestAnimationFrame(step);

@@ -100,6 +100,12 @@ originales pesaban 200 KB cada uno para eso.
 **Iconos** — `favicon.ico` y `assets/img/favicon-*.png` se generan componiendo
 `fuentes/lotus-claro.png` sobre el verde `#3A4234`.
 
+**Loto de la precarga** — `lotus-mark.png` es solo un canal alfa: sirve de
+máscara CSS a las tres capas que rellenan el loto mientras sube el contador. Al
+generarlo hay que dejar el fondo en alfa 0 exacto; si el redondeo lo deja en 4,
+la máscara deja pasar un rectángulo tenue alrededor del dibujo. Por lo mismo,
+esas capas no llevan `filter`: conviene comprobarlas sobre fondo oscuro.
+
 ## Detalles del diseño no incluidos
 
 - La **variante B del hero** (titular partido en dos columnas) era una opción del
