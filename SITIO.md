@@ -68,7 +68,7 @@ acompañamiento → día y hora → datos → confirmación.
 
 Marcado así en el diseño y conservado tal cual:
 
-- **Precios reales** — hoy dice «tarifa provisional» en la sección de precios.
+- **Precios reales** — hoy dice «tarifa provisional» en la sección «Sesiones».
 - **Dirección presencial** — «pendiente de confirmar» en Contacto y en la reserva.
 - **Correo electrónico** — «pendiente de confirmar» en la lista de canales.
 - **Resto de fotos propias** — el retrato de Rosa Elena ya es suyo; las demás
@@ -95,7 +95,7 @@ salen las dos versiones que se sirven, y desde ahí se pueden regenerar:
   panel de ajustes de Claude Design. El sitio publica la variante A, que es la
   que estaba activa. Su maquetación sigue disponible en el archivo original por
   si quieres cambiarla.
-- Los interruptores del editor para ocultar el aviso o los precios no tienen
+- Los interruptores del editor para ocultar el aviso o las tarifas no tienen
   sentido en producción: ambas secciones están visibles.
 
 ## Comprobado
