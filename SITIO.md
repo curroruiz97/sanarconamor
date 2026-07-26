@@ -9,7 +9,7 @@ sitio estático listo para publicar. Sin build, sin dependencias: se sube tal cu
 index.html              Todas las páginas (inicio + 4 páginas) y las capas superpuestas
 assets/css/site.css     Sistema visual completo: paleta, tipografía, componentes
 assets/js/site.js       Precarga, rutas, revelados, parallax y sistema de reservas
-assets/img/             Logotipo de loto en sus dos versiones (tinta y crema)
+assets/img/             Loto de la marca, iconos del sitio y retratos de Rosa Elena
 vercel.json             Reescrituras para las rutas + caché de assets (Vercel)
 _redirects              Lo mismo para Netlify
 ```
@@ -43,10 +43,9 @@ pero recargar una ruta directa dará 404 en local.
   mostraba el prototipo se han retirado: la licencia de Unsplash permite el uso
   comercial sin atribución, así que son opcionales.
 - **Tarjetas clicables sin anidar enlaces.** En el prototipo, las tarjetas de
-  acompañamiento eran un `<a>` que envolvía los enlaces del crédito de la foto
-  (HTML inválido: el crédito quedaba inaccesible). Ahora la tarjeta es un
-  contenedor y el enlace del título cubre toda su superficie, con el crédito por
-  encima. El aviso del círculo sigue el mismo patrón.
+  acompañamiento eran un `<a>` que envolvía otros enlaces, lo que es HTML
+  inválido. Ahora la tarjeta es un contenedor y el enlace del título cubre toda
+  su superficie. El aviso del círculo sigue el mismo patrón.
 - **Accesibilidad.** Enlace para saltar al contenido, `aria-expanded` en el
   desplegable, el menú y las preguntas frecuentes, textos alternativos
   descriptivos, foco visible y respeto por `prefers-reduced-motion`.
@@ -72,16 +71,23 @@ Marcado así en el diseño y conservado tal cual:
 - **Precios reales** — hoy dice «tarifa provisional» en la sección de precios.
 - **Dirección presencial** — «pendiente de confirmar» en Contacto y en la reserva.
 - **Correo electrónico** — «pendiente de confirmar» en la lista de canales.
-- **Retrato de Rosa Elena** — los tres sitios donde aparece (sección «Sobre mí»,
-  ficha ampliada y panel lateral de la reserva) siguen con una foto de stock.
-  Para cambiarlos, deja la foto en `assets/img/rosa-elena.jpg` y sustituye las
-  tres apariciones de `photo-1593811167562-…` en `index.html` por
-  `/assets/img/rosa-elena.jpg`.
-- **Resto de fotos propias** — las demás imágenes son de stock (Unsplash). Para
-  sustituir una, basta con cambiar su `src` y su `alt`.
+- **Resto de fotos propias** — el retrato de Rosa Elena ya es suyo; las demás
+  imágenes siguen siendo de stock (Unsplash). Para sustituir una, basta con
+  cambiar su `src` y su `alt`.
 - **Formulario de contacto** — es una maqueta, como en el diseño: el botón lleva
   a Instagram. Para que llegue por correo hace falta un servicio de formularios
   (Formspree, Netlify Forms) o un backend.
+
+## Imágenes de Rosa Elena
+
+El original está en `assets/img/rosa-elena-original.jpg` (1200×1600). De ahí
+salen las dos versiones que se sirven, y desde ahí se pueden regenerar:
+
+- `rosa-elena.jpg` / `.webp` — 1000 px de ancho, para «Sobre mí» y la ficha
+  ampliada. Se sirven con `<picture>`: WebP a quien lo admita, JPEG al resto.
+- `rosa-elena-avatar.jpg` — recorte cuadrado de 200 px centrado en el rostro,
+  para el hueco de 84 px del panel de la reserva. Cargar ahí la foto completa
+  era desperdiciar unos 200 KB.
 
 ## Detalles del diseño no incluidos
 
