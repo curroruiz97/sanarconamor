@@ -32,7 +32,8 @@ al abrirlas directamente. En Netlify, eso mismo lo cubre `_redirects`.
 - `assets/css/site.css`: sistema visual completo (paleta, tipografía, componentes).
 - `assets/js/site.js`: precarga, rutas, revelados, parallax y reservas.
 - `assets/img/`: logotipo de loto, en tinta oscura y en crema.
-- `favicon.svg`, `robots.txt`: icono y directivas para buscadores.
+- `favicon.ico` y `assets/img/favicon-*.png`: icono del sitio (el loto sobre verde).
+- `robots.txt`: directivas para buscadores.
 - `vercel.json`, `_redirects`: configuración de despliegue.
 - `SITIO.md`: notas de implementación, decisiones y lo que queda pendiente.
 

@@ -39,9 +39,9 @@ pero recargar una ruta directa dará 404 en local.
   han trasladado a un sistema de tokens y componentes, conservando cada valor
   (tamaños, `clamp()`, colores, duraciones y retardos de animación).
 - **`image-slot` → `<img>`.** El componente del editor se ha sustituido por
-  imágenes normales con `object-fit: cover` y el mismo distintivo de crédito
-  abajo a la izquierda. Los enlaces de Unsplash llevan los parámetros de
-  referencia que exige su licencia (`utm_source=sanar_con_amor`).
+  imágenes normales con `object-fit: cover`. Los distintivos de crédito que
+  mostraba el prototipo se han retirado: la licencia de Unsplash permite el uso
+  comercial sin atribución, así que son opcionales.
 - **Tarjetas clicables sin anidar enlaces.** En el prototipo, las tarjetas de
   acompañamiento eran un `<a>` que envolvía los enlaces del crédito de la foto
   (HTML inválido: el crédito quedaba inaccesible). Ahora la tarjeta es un
@@ -72,9 +72,13 @@ Marcado así en el diseño y conservado tal cual:
 - **Precios reales** — hoy dice «tarifa provisional» en la sección de precios.
 - **Dirección presencial** — «pendiente de confirmar» en Contacto y en la reserva.
 - **Correo electrónico** — «pendiente de confirmar» en la lista de canales.
-- **Fotos propias** — las 24 imágenes son de stock (Unsplash, con crédito
-  visible). Para sustituir una, cambia su `src` y su `<span class="credit">`;
-  si la foto es tuya, borra el crédito entero.
+- **Retrato de Rosa Elena** — los tres sitios donde aparece (sección «Sobre mí»,
+  ficha ampliada y panel lateral de la reserva) siguen con una foto de stock.
+  Para cambiarlos, deja la foto en `assets/img/rosa-elena.jpg` y sustituye las
+  tres apariciones de `photo-1593811167562-…` en `index.html` por
+  `/assets/img/rosa-elena.jpg`.
+- **Resto de fotos propias** — las demás imágenes son de stock (Unsplash). Para
+  sustituir una, basta con cambiar su `src` y su `alt`.
 - **Formulario de contacto** — es una maqueta, como en el diseño: el botón lleva
   a Instagram. Para que llegue por correo hace falta un servicio de formularios
   (Formspree, Netlify Forms) o un backend.

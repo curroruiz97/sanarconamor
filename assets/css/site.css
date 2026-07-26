@@ -402,27 +402,6 @@ img { display: block; }
   background: rgba(127, 127, 127, .08);
 }
 
-.credit {
-  position: absolute;
-  left: 6px;
-  bottom: 6px;
-  z-index: 2;
-  max-width: calc(100% - 12px);
-  padding: 3px 7px;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, .55);
-  color: #fff;
-  font: 10px/1.2 system-ui, -apple-system, sans-serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  backdrop-filter: blur(6px);
-}
-
-.credit a { color: inherit; }
-.credit a:hover,
-.credit a:focus-visible { color: inherit; text-decoration: underline; }
-
 /* --------------------------------------------------------------------------
    Precarga y cortina de transición
    -------------------------------------------------------------------------- */
@@ -1019,8 +998,7 @@ img { display: block; }
 
 .aviso { position: relative; }
 
-/* Superficie clicable que cubre la tarjeta sin anidar controles: deja libre
-   el crédito de la foto, que va por encima. */
+/* Superficie clicable que cubre la tarjeta entera sin anidar controles. */
 .aviso__hit {
   position: absolute;
   inset: 0;
@@ -1030,8 +1008,6 @@ img { display: block; }
   background: transparent;
   cursor: pointer;
 }
-
-.aviso .credit { z-index: 2; }
 
 .aviso__media { height: 230px; max-width: 420px; }
 
@@ -1178,8 +1154,6 @@ img { display: block; }
   inset: 0;
   z-index: 1;
 }
-
-.svc-card .credit { z-index: 2; }
 
 .svc-card__copy {
   font-size: 15.5px;
@@ -1875,10 +1849,16 @@ textarea.field { resize: vertical; }
    Reserva a pantalla completa
    -------------------------------------------------------------------------- */
 
+/* Nunca más alto que la ventana: lo que no cabe se desplaza dentro del cuerpo,
+   no empujando la barra inferior fuera de la pantalla. */
 .booking {
   position: fixed;
   inset: 0;
   z-index: 170;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
   background: var(--paper);
   display: flex;
   flex-direction: column;
@@ -1939,7 +1919,7 @@ textarea.field { resize: vertical; }
 
 .booking__steps {
   flex: 0 0 auto;
-  padding: 22px var(--gutter) 0;
+  padding: 22px var(--gutter) 26px;
 }
 
 .booking__steps-inner {
@@ -1978,10 +1958,13 @@ textarea.field { resize: vertical; }
 .step-tab.is-done .step-tab__bar { background: var(--ink); }
 .step-tab.is-done .step-tab__label { color: var(--ink); }
 
+/* min-height:0 es lo que permite que este bloque encoja y se desplace por
+   dentro en vez de estirar el contenedor. */
 .booking__body {
   flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  padding: 36px var(--gutter) 40px;
+  padding: 8px var(--gutter) 32px;
 }
 
 .booking__cols {
@@ -1989,7 +1972,7 @@ textarea.field { resize: vertical; }
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
+  gap: 40px;
   align-items: flex-start;
 }
 
@@ -2005,7 +1988,7 @@ textarea.field { resize: vertical; }
   font-size: 15.5px;
   line-height: 1.6;
   color: var(--muted);
-  margin: 0 0 34px;
+  margin: 0 0 22px;
 }
 
 .booking__step[hidden] { display: none; }
@@ -2042,7 +2025,7 @@ textarea.field { resize: vertical; }
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  padding: 22px 24px;
+  padding: 16px 22px;
 }
 
 .opt--svc .opt__n {
@@ -2087,7 +2070,7 @@ textarea.field { resize: vertical; }
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 16px 20px;
+  padding: 14px 18px;
   width: auto;
 }
 
@@ -2351,10 +2334,10 @@ textarea.field { resize: vertical; }
   min-width: 0;
   background: var(--forest);
   color: var(--paper);
-  padding: 30px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
 }
 
 .booking__aside-top {
