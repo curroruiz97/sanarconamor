@@ -1,14 +1,18 @@
 # Sanar con Amor
 
-Web profesional de **Sanar con Amor**, preparada para publicarse desde GitHub en Vercel.
+Web de **Sanar con Amor** — Rosa Elena Palomino, coach espiritual y consteladora
+familiar. Estática, sin build y sin dependencias: se publica desde GitHub en Vercel.
 
 ## Desarrollo local
 
-Al ser una web estática, puedes abrir `index.html` directamente o servir la carpeta con cualquier servidor local, por ejemplo:
-
 ```bash
 npx serve .
+# o bien
+python3 -m http.server 4173
 ```
+
+Abrir `index.html` con doble clic no funciona: las rutas de los archivos son
+absolutas (`/assets/…`). Hay que servir la carpeta.
 
 ## Despliegue en Vercel
 
@@ -17,15 +21,28 @@ npx serve .
 3. Deja vacíos Build Command y Output Directory.
 4. Pulsa **Deploy**.
 
-No necesita variables de entorno. El formulario prepara una solicitud, copia el texto y abre el perfil de Instagram para enviarla.
+No necesita variables de entorno. `vercel.json` ya incluye las cabeceras de
+seguridad, la caché de los assets y las reescrituras que hacen falta para que
+`/constelaciones`, `/tarot`, `/meditacion` y `/contacto` funcionen al recargar o
+al abrirlas directamente. En Netlify, eso mismo lo cubre `_redirects`.
 
 ## Estructura
 
-- `index.html`: contenido, estilos, interacciones y metadatos SEO.
-- `favicon.svg`: icono de la web.
-- `robots.txt`: directivas básicas para buscadores.
-- `vercel.json`: configuración y cabeceras de seguridad.
+- `index.html`: las cinco páginas, los modales y el sistema de reservas.
+- `assets/css/site.css`: sistema visual completo (paleta, tipografía, componentes).
+- `assets/js/site.js`: precarga, rutas, revelados, parallax y reservas.
+- `assets/img/`: logotipo de loto, en tinta oscura y en crema.
+- `favicon.svg`, `robots.txt`: icono y directivas para buscadores.
+- `vercel.json`, `_redirects`: configuración de despliegue.
+- `SITIO.md`: notas de implementación, decisiones y lo que queda pendiente.
+
+Las cinco páginas viven en un solo HTML y se muestran u ocultan al navegar, sin
+recargar, conservando la transición de cortina. Cada una tiene su propia
+dirección y su propio título.
 
 ## Antes del dominio definitivo
 
-Conviene sustituir las ilustraciones provisionales por fotografías profesionales de Rosa Elena y confirmar dirección presencial, tarifas, política de privacidad, aviso legal y datos del titular.
+Sustituir las fotos de stock por fotografías propias de Rosa Elena y confirmar
+tarifas, dirección presencial y correo —ahora marcados como provisionales—,
+además de la política de privacidad, el aviso legal y los datos del titular.
+El detalle está en [`SITIO.md`](SITIO.md).
