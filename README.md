@@ -28,18 +28,28 @@ al abrirlas directamente. En Netlify, eso mismo lo cubre `_redirects`.
 
 ## Estructura
 
-- `index.html`: las cinco páginas, los modales y el sistema de reservas.
-- `assets/css/site.css`: sistema visual completo (paleta, tipografía, componentes).
-- `assets/js/site.js`: precarga, rutas, revelados, parallax y reservas.
-- `assets/img/`: logotipo de loto, en tinta oscura y en crema.
-- `favicon.ico` y `assets/img/favicon-*.png`: icono del sitio (el loto sobre verde).
-- `robots.txt`: directivas para buscadores.
-- `vercel.json`, `_redirects`: configuración de despliegue.
-- `SITIO.md`: notas de implementación, decisiones y lo que queda pendiente.
+```
+index.html            Las cinco páginas, los modales y el sistema de reservas
+assets/
+  css/site.css        Sistema visual: paleta, tipografía, componentes
+  js/site.js          Precarga, rutas, revelados, parallax y reservas
+  img/                Solo lo que se sirve: loto, iconos y retratos
+fuentes/              Originales a tamaño completo, para regenerar recortes
+favicon.ico           Icono del sitio (el loto sobre verde)
+robots.txt            Directivas para buscadores
+vercel.json           Reescrituras, cabeceras de seguridad y caché
+_redirects            Lo mismo, para Netlify
+.vercelignore         Deja fuera del despliegue las fuentes y la documentación
+SITIO.md              Notas de implementación y lo que queda pendiente
+```
 
 Las cinco páginas viven en un solo HTML y se muestran u ocultan al navegar, sin
 recargar, conservando la transición de cortina. Cada una tiene su propia
 dirección y su propio título.
+
+Las imágenes de `assets/img/` están ajustadas al tamaño en que se muestran. Los
+originales viven en `fuentes/` y no se publican: si hace falta rehacer un
+recorte o un icono, se parte de ahí.
 
 ## Antes del dominio definitivo
 

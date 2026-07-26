@@ -1,0 +1,7 @@
+# Originales de las imágenes: solo sirven para regenerar los recortes,
+# no hacen falta en el sitio publicado.
+fuentes/
+
+# Documentación interna del proyecto.
+README.md
+SITIO.md

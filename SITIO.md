@@ -1,7 +1,7 @@
 # Sanar con Amor — sitio implementado
 
-Implementación del diseño `project/Sanar con Amor.dc.html` (Claude Design) como
-sitio estático listo para publicar. Sin build, sin dependencias: se sube tal cual.
+Implementación del diseño hecho en Claude Design como sitio estático listo para
+publicar. Sin build, sin dependencias: se sube tal cual.
 
 ## Estructura
 
@@ -9,7 +9,8 @@ sitio estático listo para publicar. Sin build, sin dependencias: se sube tal cu
 index.html              Todas las páginas (inicio + 4 páginas) y las capas superpuestas
 assets/css/site.css     Sistema visual completo: paleta, tipografía, componentes
 assets/js/site.js       Precarga, rutas, revelados, parallax y sistema de reservas
-assets/img/             Loto de la marca, iconos del sitio y retratos de Rosa Elena
+assets/img/             Imágenes servidas, ya ajustadas a su tamaño de uso
+fuentes/                Originales a tamaño completo (no se despliegan)
 vercel.json             Reescrituras para las rutas + caché de assets (Vercel)
 _redirects              Lo mismo para Netlify
 ```
@@ -78,16 +79,26 @@ Marcado así en el diseño y conservado tal cual:
   a Instagram. Para que llegue por correo hace falta un servicio de formularios
   (Formspree, Netlify Forms) o un backend.
 
-## Imágenes de Rosa Elena
+## Imágenes
 
-El original está en `assets/img/rosa-elena-original.jpg` (1200×1600). De ahí
-salen las dos versiones que se sirven, y desde ahí se pueden regenerar:
+En `assets/img/` solo va lo que se sirve, al tamaño en que se muestra. Los
+originales están en `fuentes/`, fuera del despliegue, para poder rehacer
+cualquier recorte.
+
+**Retrato de Rosa Elena** — de `fuentes/rosa-elena.jpg` (1200×1600) salen:
 
 - `rosa-elena.jpg` / `.webp` — 1000 px de ancho, para «Sobre mí» y la ficha
   ampliada. Se sirven con `<picture>`: WebP a quien lo admita, JPEG al resto.
 - `rosa-elena-avatar.jpg` — recorte cuadrado de 200 px centrado en el rostro,
   para el hueco de 84 px del panel de la reserva. Cargar ahí la foto completa
-  era desperdiciar unos 200 KB.
+  era desperdiciar unos 230 KB.
+
+**Loto de la marca** — de `fuentes/lotus-*.png` (884×579) salen las versiones de
+120 px de alto que usa la cabecera, que lo pinta a 40 px (29 en móvil). Los
+originales pesaban 200 KB cada uno para eso.
+
+**Iconos** — `favicon.ico` y `assets/img/favicon-*.png` se generan componiendo
+`fuentes/lotus-claro.png` sobre el verde `#3A4234`.
 
 ## Detalles del diseño no incluidos
 
