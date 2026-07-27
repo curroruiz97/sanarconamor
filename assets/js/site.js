@@ -369,13 +369,30 @@
 
   var booking = $('#booking');
 
+  // Catálogo de sesiones. La clave es el valor de data-svc en el paso 1 y el
+  // texto que viaja en la solicitud, así que debe coincidir con el HTML.
+  // Precios de España, por sesión; `min` es lo que dura el hueco en el
+  // calendario y en el .ics, `durTexto` lo que se muestra.
+  var SERVICIOS = {
+    'Constelaciones familiares': { min: 90, durTexto: '90 min', precio: 90, presencial: true },
+    'Tarot evolutivo':           { min: 90, durTexto: '90 min', precio: 80, presencial: true },
+    'Meditación guiada':         { min: 60, durTexto: '45–60 min', precio: 35, presencial: false },
+    'Acompañamiento de crecimiento personal': { min: 90, durTexto: '90 min', precio: 95, presencial: true }
+  };
+
+  var WHATSAPP = '34672298203';
+  var CORREO = 'sanarconamor.1@gmail.com';
+  var INSTAGRAM = 'https://www.instagram.com/sanarconamor.coach';
+
+  function datosDe(nombre) { return (nombre && SERVICIOS[nombre]) || null; }
+
   var res = {
     step: 1,
     maxStep: 1,
     intento: false,
     servicio: null,
     modalidad: 'online',
-    dur: 60,
+    dur: 90,
     y: new Date().getFullYear(),
     m: new Date().getMonth(),
     dia: null,
@@ -568,12 +585,19 @@
     $$('[data-svc]').forEach(function (b) {
       b.classList.toggle('is-on', b.getAttribute('data-svc') === res.servicio);
     });
+    // La meditación guiada solo se hace online: con ella elegida, el botón de
+    // presencial queda desactivado y se explica por qué.
+    var svcData = datosDe(res.servicio);
+    var soloOnline = !!svcData && !svcData.presencial;
     $$('[data-mod]').forEach(function (b) {
-      b.classList.toggle('is-on', b.getAttribute('data-mod') === res.modalidad);
+      var modo = b.getAttribute('data-mod');
+      var off = soloOnline && modo === 'presencial';
+      b.classList.toggle('is-on', modo === res.modalidad);
+      b.classList.toggle('is-off', off);
+      b.disabled = off;
     });
-    $$('[data-dur]').forEach(function (b) {
-      b.classList.toggle('is-on', parseInt(b.getAttribute('data-dur'), 10) === res.dur);
-    });
+    var modNote = $('#mod-note');
+    if (modNote) modNote.hidden = !soloOnline;
 
     if (res.step === 2) {
       renderCalendar();
@@ -587,7 +611,8 @@
     var out = {
       servicio: res.servicio || 'Por elegir',
       modalidad: res.modalidad === 'online' ? 'Online' : 'Presencial',
-      dur: res.dur + ' min',
+      dur: svcData ? svcData.durTexto : '—',
+      precio: svcData ? svcData.precio + ' €' : '—',
       cita: cita,
       nombre: res.nombre,
       contacto: res.contacto
@@ -650,12 +675,14 @@
   function textoReserva() {
     var tz = '';
     try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = ''; }
+    var datos = datosDe(res.servicio);
     return [
       'Hola Rosa Elena, quiero reservar una sesión.',
       '',
       'Acompañamiento: ' + res.servicio,
       'Modalidad: ' + (res.modalidad === 'online' ? 'Online' : 'Presencial'),
-      'Duración: ' + res.dur + ' min',
+      'Duración: ' + (datos ? datos.durTexto : res.dur + ' min'),
+      datos ? 'Precio: ' + datos.precio + ' €' : '',
       'Fecha: ' + fechaLarga(res.dia) + ' a las ' + res.hora + (tz ? ' (' + tz + ')' : ''),
       'Nombre: ' + res.nombre,
       'Contacto: ' + res.contacto,
@@ -665,15 +692,53 @@
     ].filter(Boolean).join('\n');
   }
 
+  // WhatsApp y correo admiten el mensaje en la propia dirección, así que ahí
+  // se abre ya escrito. Instagram no: para ese caso queda el portapapeles.
   function enviarReserva(canal) {
     var txt = textoReserva();
     try { navigator.clipboard.writeText(txt); } catch (e) { /* sin portapapeles */ }
     try { localStorage.setItem('scam-reserva', JSON.stringify(res)); } catch (e) { /* sin storage */ }
-    setRes({ copiado: true });
-    var url = canal === 'ig'
-      ? 'https://www.instagram.com/sanarconamor.coach'
-      : 'https://www.facebook.com/share/1DjsWxSxtM/';
-    window.open(url, '_blank', 'noopener');
+    setRes({ copiado: canal === 'ig' });
+
+    if (canal === 'wa') {
+      window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+      return;
+    }
+    if (canal === 'mail') {
+      var asunto = 'Reserva de sesión' + (res.servicio ? ' — ' + res.servicio : '');
+      window.location.href = 'mailto:' + CORREO +
+        '?subject=' + encodeURIComponent(asunto) +
+        '&body=' + encodeURIComponent(txt);
+      return;
+    }
+    window.open(INSTAGRAM, '_blank', 'noopener');
+  }
+
+  // Formulario de la página de contacto: no hay backend, así que compone el
+  // mensaje y lo abre en WhatsApp o en el gestor de correo, ya escrito.
+  function enviarFormulario(canal) {
+    var val = function (sel) {
+      var el = $(sel);
+      return el ? el.value.trim() : '';
+    };
+    var txt = [
+      'Hola Rosa Elena, me gustaría pedir cita.',
+      '',
+      val('#cf-nombre') ? 'Nombre: ' + val('#cf-nombre') : '',
+      val('#cf-contacto') ? 'Contacto: ' + val('#cf-contacto') : '',
+      val('#cf-modalidad') ? 'Modalidad: ' + val('#cf-modalidad') : '',
+      val('#cf-servicio') ? 'Acompañamiento: ' + val('#cf-servicio') : '',
+      '',
+      val('#cf-motivo') ? 'Qué me trae: ' + val('#cf-motivo') : ''
+    ].filter(Boolean).join('\n');
+
+    if (canal === 'wa') {
+      window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+      return;
+    }
+    window.location.href = 'mailto:' + CORREO +
+      '?subject=' + encodeURIComponent('Solicitud de cita') +
+      '&body=' + encodeURIComponent(txt);
   }
 
   function descargarIcs() {
@@ -793,13 +858,21 @@
 
       // ── Reserva ──
       var svc = hit('[data-svc]');
-      if (svc) { setRes({ servicio: svc.getAttribute('data-svc') }); return; }
+      if (svc) {
+        var nombre = svc.getAttribute('data-svc');
+        var datos = datosDe(nombre);
+        // La duración la fija el acompañamiento, no la persona. Y si ese
+        // acompañamiento no se hace presencial, la modalidad vuelve a online.
+        setRes({
+          servicio: nombre,
+          dur: datos ? datos.min : res.dur,
+          modalidad: (datos && !datos.presencial) ? 'online' : res.modalidad
+        });
+        return;
+      }
 
       var mod = hit('[data-mod]');
-      if (mod) { setRes({ modalidad: mod.getAttribute('data-mod') }); return; }
-
-      var dur = hit('[data-dur]');
-      if (dur) { setRes({ dur: parseInt(dur.getAttribute('data-dur'), 10) }); return; }
+      if (mod && !mod.disabled) { setRes({ modalidad: mod.getAttribute('data-mod') }); return; }
 
       var day = hit('[data-iso]');
       if (day && !day.disabled) { setRes({ dia: day.getAttribute('data-iso'), hora: null }); return; }
@@ -825,9 +898,13 @@
         return;
       }
 
+      if (hit('#send-wa')) { enviarReserva('wa'); return; }
+      if (hit('#send-mail')) { enviarReserva('mail'); return; }
       if (hit('#send-ig')) { enviarReserva('ig'); return; }
-      if (hit('#send-fb')) { enviarReserva('fb'); return; }
       if (hit('#send-ics')) { descargarIcs(); return; }
+
+      if (hit('#cf-wa')) { enviarFormulario('wa'); return; }
+      if (hit('#cf-mail')) { enviarFormulario('mail'); return; }
 
       if (hit('#booking-reset')) {
         setRes({ step: 1, maxStep: 1, servicio: null, dia: null, hora: null, copiado: false, intento: false });

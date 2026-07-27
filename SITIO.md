@@ -11,6 +11,7 @@ assets/css/site.css     Sistema visual completo: paleta, tipografía, componente
 assets/js/site.js       Precarga, rutas, revelados, parallax y sistema de reservas
 assets/img/             Imágenes servidas, ya ajustadas a su tamaño de uso
 fuentes/                Originales a tamaño completo (no se despliegan)
+dev.py                  Servidor local que aplica las reescrituras de vercel.json
 vercel.json             Reescrituras para las rutas + caché de assets (Vercel)
 _redirects              Lo mismo para Netlify
 ```
@@ -18,14 +19,15 @@ _redirects              Lo mismo para Netlify
 ## Cómo verlo en local
 
 ```bash
-python3 -m http.server 4173
+python3 dev.py
 # http://localhost:4173
 ```
 
 Las rutas internas (`/constelaciones`, `/tarot`…) necesitan que el servidor
 devuelva `index.html` cuando la ruta no existe como archivo. `vercel.json` y
-`_redirects` ya lo hacen; con `http.server` funciona la navegación por enlaces,
-pero recargar una ruta directa dará 404 en local.
+`_redirects` ya lo hacen en producción; `dev.py` lee ese mismo `vercel.json`
+para reproducirlo en local. Con `python3 -m http.server` la navegación por
+enlaces funciona, pero recargar una ruta directa da 404.
 
 ## Decisiones de implementación
 
@@ -51,6 +53,34 @@ pero recargar una ruta directa dará 404 en local.
   desplegable, el menú y las preguntas frecuentes, textos alternativos
   descriptivos, foco visible y respeto por `prefers-reduced-motion`.
 
+## Servicios y tarifas
+
+Son cuatro, con los precios de España que dio Rosa Elena:
+
+| Acompañamiento | Duración | Modalidad | Precio |
+| --- | --- | --- | --- |
+| Constelaciones familiares | 90 min | Individual, online o presencial | 90 € |
+| Tarot evolutivo | 90 min | Online o presencial | 80 € |
+| Meditación guiada | 45–60 min | Solo online | 35 € |
+| Acompañamiento de crecimiento personal | 90 min | Online o presencial | 95 € |
+
+Los tres primeros tienen página propia y aparecen como tarjetas en
+«Acompañamientos». El cuarto es un proceso, no una disciplina, así que ocupa una
+banda ancha bajo las tres tarjetas (`.svc-wide`) en vez de una cuarta columna
+que rompería la simetría con las tres páginas. Si algún día tiene página propia,
+lo natural es convertirlo en una cuarta tarjeta y retirar la banda.
+
+Ella habló de «precio España», lo que da a entender que hay otra tarifa para
+Argentina. Como no la tenemos, la sección lo dice en una nota y ofrece
+confirmarla por mensaje.
+
+**Los precios viven en tres sitios y hay que cambiarlos en los tres**: la
+sección `#sesiones` de `index.html`, el `application/ld+json` de la cabecera
+(que es lo que lee Google) y la tabla `SERVICIOS` de `assets/js/site.js`, que
+gobierna el paso 1 de la reserva. La clave de esa tabla es el `data-svc` del
+botón y el texto que viaja en la solicitud, así que tiene que coincidir
+literalmente con el HTML.
+
 ## Sistema de reservas
 
 Cuatro pasos dentro de una capa a pantalla completa, igual que el diseño:
@@ -58,26 +88,51 @@ acompañamiento → día y hora → datos → confirmación.
 
 - Domingos cerrado, sábados solo por la mañana, nada con menos de 4 h de antelación.
 - El calendario navega hasta cuatro meses vista y no ofrece días pasados.
+- **La duración y el precio los fija el acompañamiento**, no la persona. Antes
+  había un selector de 60/90 minutos: se ha quitado porque cada servicio tiene
+  su duración y dejaba elegir combinaciones que no existen. La meditación
+  guiada, además, desactiva el botón de «presencial» y explica por qué.
 - **Las horas ocupadas son simuladas** con una huella estable por fecha: el mismo
   día muestra siempre los mismos huecos, pero no hay agenda real detrás. Cuando
   haya un Calendly, un Google Calendar o un correo, se sustituye
   `horasDe()` en `assets/js/site.js` por la disponibilidad de verdad.
-- La confirmación copia la solicitud al portapapeles, abre Instagram o Facebook
-  y permite descargar el `.ics` de la cita.
+- **WhatsApp y correo llevan el mensaje ya escrito** en la propia dirección
+  (`wa.me/...?text=` y `mailto:...?body=`), así que la persona solo tiene que
+  pulsar enviar. Instagram no admite texto en la URL: para ese canal se sigue
+  copiando al portapapeles y avisando de que hay que pegarlo.
+- Sigue pudiendo descargarse el `.ics` de la cita, con la duración del servicio.
 
 ## Pendiente de contenido
 
-Marcado así en el diseño y conservado tal cual:
-
-- **Precios reales** — hoy dice «tarifa provisional» en la sección «Sesiones».
-- **Dirección presencial** — «pendiente de confirmar» en Contacto y en la reserva.
-- **Correo electrónico** — «pendiente de confirmar» en la lista de canales.
+- **Dirección presencial** — «pendiente de confirmar» en Contacto y en la
+  reserva. Es lo único que queda sin dato.
+- **Tarifa para Argentina** — la sección de sesiones dice que se confirma por
+  mensaje. Si nos la pasa, entra como segunda columna o como nota por servicio.
 - **Resto de fotos propias** — el retrato de Rosa Elena ya es suyo; las demás
   imágenes siguen siendo de stock (Unsplash). Para sustituir una, basta con
   cambiar su `src` y su `alt`.
-- **Formulario de contacto** — es una maqueta, como en el diseño: el botón lleva
-  a Instagram. Para que llegue por correo hace falta un servicio de formularios
-  (Formspree, Netlify Forms) o un backend.
+- **Página del acompañamiento de crecimiento personal** — hoy no tiene una,
+  a diferencia de los otros tres servicios.
+- **Círculo de constelaciones en grupo** — el aviso de la portada dice «en
+  preparación» y recoge interesadas por WhatsApp. Cuando haya fecha, hay que
+  ponerla ahí y en el modal.
+- **Aviso legal y política de privacidad** — no existen todavía. El formulario
+  no guarda nada, pero el pie debería enlazarlos.
+
+## Formularios
+
+No hay backend y no se guarda nada en ningún servidor. Tanto el formulario de
+contacto como el paso 4 de la reserva componen el mensaje y lo abren en
+WhatsApp o en el gestor de correo con el texto ya puesto. Si algún día se quiere
+recibirlos por correo sin salir de la web, hace falta un servicio de formularios
+(Formspree, Netlify Forms) o un backend.
+
+## Datos estructurados
+
+La cabecera lleva un `application/ld+json` con el negocio, Rosa Elena y los
+cuatro servicios con su precio, para que Google pueda mostrarlos. **Las URL de
+ese bloque y la del `<link rel="canonical">` apuntan al dominio de Vercel**: al
+contratar el definitivo hay que cambiarlas.
 
 ## Imágenes
 

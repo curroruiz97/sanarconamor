@@ -5,3 +5,6 @@ fuentes/
 # Documentación interna del proyecto.
 README.md
 SITIO.md
+
+# Servidor de desarrollo: solo se usa en local.
+dev.py

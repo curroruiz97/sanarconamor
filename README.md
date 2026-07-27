@@ -6,10 +6,14 @@ familiar. Estática, sin build y sin dependencias: se publica desde GitHub en Ve
 ## Desarrollo local
 
 ```bash
-npx serve .
-# o bien
-python3 -m http.server 4173
+python3 dev.py
+# http://localhost:4173
 ```
+
+`dev.py` lee las reescrituras de `vercel.json`, así que `/constelaciones`,
+`/tarot`, `/meditacion` y `/contacto` también funcionan al recargarlas o al
+abrirlas directamente, igual que en producción. Con `python3 -m http.server`
+esas rutas dan 404 al recargar.
 
 Abrir `index.html` con doble clic no funciona: las rutas de los archivos son
 absolutas (`/assets/…`). Hay que servir la carpeta.
@@ -35,6 +39,7 @@ assets/
   js/site.js          Precarga, rutas, revelados, parallax y reservas
   img/                Solo lo que se sirve: loto, iconos y retratos
 fuentes/              Originales a tamaño completo, para regenerar recortes
+dev.py                Servidor local con las reescrituras de Vercel
 favicon.ico           Icono del sitio (el loto sobre verde)
 robots.txt            Directivas para buscadores
 vercel.json           Reescrituras, cabeceras de seguridad y caché
@@ -42,6 +47,18 @@ _redirects            Lo mismo, para Netlify
 .vercelignore         Deja fuera del despliegue las fuentes y la documentación
 SITIO.md              Notas de implementación y lo que queda pendiente
 ```
+
+## Datos de contacto y tarifas
+
+Están en tres sitios y hay que cambiarlos en los tres a la vez:
+
+- **`index.html`** — la sección `#sesiones` (tarifas visibles), el `<script
+  type="application/ld+json">` de la cabecera (los mismos precios para Google),
+  el pie, la página de contacto y el menú móvil.
+- **`assets/js/site.js`** — la tabla `SERVICIOS` y las constantes `WHATSAPP`,
+  `CORREO` e `INSTAGRAM`, al principio del bloque de reservas.
+
+El detalle de qué gobierna cada cosa está en [`SITIO.md`](SITIO.md).
 
 Las cinco páginas viven en un solo HTML y se muestran u ocultan al navegar, sin
 recargar, conservando la transición de cortina. Cada una tiene su propia
@@ -53,7 +70,8 @@ recorte o un icono, se parte de ahí.
 
 ## Antes del dominio definitivo
 
-Sustituir las fotos de stock por fotografías propias de Rosa Elena y confirmar
-tarifas, dirección presencial y correo —ahora marcados como provisionales—,
-además de la política de privacidad, el aviso legal y los datos del titular.
-El detalle está en [`SITIO.md`](SITIO.md).
+Sustituir las fotos de stock por fotografías propias de Rosa Elena, confirmar
+la dirección presencial —lo único que sigue marcado como provisional—, redactar
+la política de privacidad y el aviso legal, y cambiar la base de las URL de los
+datos estructurados y del `<link rel="canonical">`, que hoy apuntan al dominio
+de Vercel. El detalle está en [`SITIO.md`](SITIO.md).

@@ -1315,8 +1315,81 @@ img { display: block; }
 
 .svc-card:hover .svc-card__arrow { transform: translateX(7px); }
 
+/* El cuarto acompañamiento es un proceso, no una disciplina con página propia:
+   ocupa una banda ancha bajo las tres tarjetas en vez de una cuarta columna. */
+.svc-wide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 34px;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding: 34px;
+  background: rgba(241, 240, 234, .06);
+  border: 1px solid rgba(241, 240, 234, .14);
+  --ty: 26px;
+  transition:
+    opacity .9s ease,
+    transform .9s var(--ease),
+    background .4s ease;
+}
+
+.svc-wide:hover { background: rgba(241, 240, 234, .11); }
+
+.svc-wide__text { flex: 1 1 420px; min-width: 0; }
+
+.svc-wide__title {
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin: 0;
+}
+
+.svc-wide__copy {
+  font-size: 16px;
+  line-height: 1.66;
+  color: rgba(241, 240, 234, .72);
+  max-width: 62ch;
+  margin: 16px 0 0;
+}
+
+.svc-wide__side {
+  flex: 0 1 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.svc-wide__meta {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(241, 240, 234, .55);
+  margin: 0;
+}
+
+.svc-wide__price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin: 0;
+}
+
+.svc-wide__price span {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(241, 240, 234, .5);
+}
+
 /* --------------------------------------------------------------------------
-   Inicio — sesiones
+   Inicio — sesiones y tarifas
    -------------------------------------------------------------------------- */
 
 .sesiones__title {
@@ -1325,9 +1398,20 @@ img { display: block; }
   max-width: 30ch;
 }
 
-.sesiones__list { border-top: 1px solid var(--line); }
+.sesiones__media { --h: min(70vh, 520px); }
 
-.sesiones__item {
+/* En una sola columna la foto quedaba entre el titular y los precios, que es
+   lo que la persona ha venido a ver: ahí baja y se recorta. Con --min:320px y
+   40px de margen a cada lado, la rejilla cae a una columna por debajo de
+   780px. */
+@media (max-width: 779px) {
+  .sesiones__grid .sesiones__media { order: 2; --h: min(38vh, 300px); }
+  .sesiones__grid .stack { order: 1; }
+}
+
+.tarifas { border-top: 1px solid var(--line); }
+
+.tarifa {
   padding: 26px 0;
   border-bottom: 1px solid var(--line);
   --ty: 20px;
@@ -1335,7 +1419,121 @@ img { display: block; }
   --t-dur: .8s;
 }
 
-.sesiones__item h3 { font-size: 26px; }
+.tarifa__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.tarifa__name {
+  font-size: 26px;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  margin: 0;
+  min-width: 0;
+}
+
+.tarifa__name a { color: inherit; }
+.tarifa__name a:hover { color: var(--sage-mid); }
+
+.tarifa__price {
+  flex: none;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.tarifa__desc {
+  font-size: 16px;
+  line-height: 1.64;
+  color: var(--body);
+  margin: 12px 0 0;
+  max-width: 54ch;
+}
+
+.tarifa__meta {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 14px 0 0;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sage-dim);
+}
+
+/* El separador va detrás, no delante: si la lista parte en dos líneas, el
+   punto se queda al final de la primera en vez de abrir la segunda. */
+.tarifa__meta span:not(:last-child)::after {
+  content: "·";
+  margin: 0 10px;
+  opacity: .6;
+}
+
+.tarifas__note { margin: 24px 0 0; max-width: 56ch; }
+
+/* --------------------------------------------------------------------------
+   Inicio — próximamente
+   -------------------------------------------------------------------------- */
+
+.proximo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  padding: 48px;
+  background: var(--band);
+  --ty: 26px;
+}
+
+.proximo__text { flex: 1 1 380px; min-width: 0; }
+
+.proximo__title {
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  margin: 0;
+  max-width: 18ch;
+}
+
+.proximo__copy {
+  font-size: 16.5px;
+  line-height: 1.66;
+  color: var(--body);
+  margin: 20px 0 0;
+  max-width: 52ch;
+}
+
+.proximo__list {
+  flex: 1 1 320px;
+  min-width: 0;
+  align-self: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 190px 2;
+  column-gap: 30px;
+}
+
+.proximo__list li {
+  position: relative;
+  break-inside: avoid;
+  padding: 11px 0 11px 22px;
+  font-size: 16px;
+  color: var(--body-strong);
+  border-bottom: 1px solid rgba(30, 31, 27, .12);
+}
+
+.proximo__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 21px;
+  width: 9px;
+  height: 1px;
+  background: var(--sage-mid);
+}
 
 /* --------------------------------------------------------------------------
    Inicio — sobre mí
@@ -1359,6 +1557,8 @@ img { display: block; }
   margin: 12px 0 0;
   max-width: 46ch;
 }
+
+.sobre__esencia { margin: 22px 0 0; max-width: 54ch; }
 
 .sobre .btn--ghost:hover { background: var(--sage-light); }
 
@@ -2205,12 +2405,35 @@ textarea.field { resize: vertical; }
 
 .opt--svc .opt__meta {
   margin-left: auto;
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  opacity: .6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  text-align: right;
   white-space: nowrap;
 }
+
+.opt--svc .opt__price {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.opt--svc .opt__dur {
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+
+/* Modalidad no disponible para el acompañamiento elegido (la meditación
+   guiada solo se hace online). */
+.opt.is-off {
+  opacity: .34;
+  cursor: not-allowed;
+}
+
+.opt.is-off:hover { border-color: rgba(30, 31, 27, .2); }
 
 .opt--pill {
   flex: 1 1 150px;
@@ -2437,6 +2660,14 @@ textarea.field { resize: vertical; }
 .summary__row span:first-child { color: var(--sage-dim); }
 .summary__row span:last-child { text-align: right; }
 
+.summary__row--total span:first-child { color: var(--ink); }
+
+.summary__row--total span:last-child {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
 .booking__actions {
   flex: 1 1 300px;
   min-width: 0;
@@ -2618,6 +2849,17 @@ textarea.field { resize: vertical; }
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
+}
+
+/* Bloques anchos: en pantallas estrechas el aire interior sobra y el precio
+   deja de caber en la misma línea que el nombre. */
+@media (max-width: 620px) {
+  .svc-wide { padding: 26px 22px; gap: 26px; }
+  .svc-wide__price { font-size: 34px; }
+  .proximo { padding: 32px 24px; gap: 30px; }
+  .tarifa__head { flex-wrap: wrap; }
+  .tarifa__name { flex: 1 1 100%; }
+  .tarifa__price { font-size: 23px; }
 }
 
 /* Enlaces salteados y accesibilidad */
