@@ -21,7 +21,11 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preload" as="image" href="/assets/img/lotus-mark.png">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<!-- El ?v= no es decorativo: vercel.json cachea /assets como immutable durante
+     un año, así que sin cambiar la dirección nadie que ya haya entrado vuelve a
+     descargar el CSS ni el JS. HAY QUE SUBIRLO EN CADA CAMBIO de estos dos
+     archivos, aquí y en el <script> del final. -->
+<link rel="stylesheet" href="/assets/css/site.css?v=20260727b">
 <!-- Datos estructurados. Al contratar el dominio definitivo hay que cambiar
      la base de las URL, aquí y en <link rel="canonical">. -->
 <script type="application/ld+json">
@@ -353,7 +357,7 @@
               <p class="lead" data-rv="up" data-rv-d="220" style="margin:20px 0 0">En sesión no analizamos tu vida: la ordenamos. Ponemos cada cosa en su lugar, devolvemos lo que pertenece a otros y hacemos sitio para que tu propia vida quepa entera.</p>
               <div class="stats">
                 <div data-rv="up" style="--ty:20px;--o-dur:.8s;--t-dur:.8s">
-                  <p class="stats__n">+<span data-count="15">0</span></p>
+                  <p class="stats__n">+<span data-count="15">15</span></p>
                   <p class="stats__label">años de formación y práctica</p>
                 </div>
                 <div data-rv="up" data-rv-d="90" style="--ty:20px;--o-dur:.8s;--t-dur:.8s">
@@ -361,7 +365,7 @@
                   <p class="stats__label">acompañamiento individual</p>
                 </div>
                 <div data-rv="up" data-rv-d="180" style="--ty:20px;--o-dur:.8s;--t-dur:.8s">
-                  <p class="stats__n"><span data-count="100">0</span>%</p>
+                  <p class="stats__n"><span data-count="100">100</span>%</p>
                   <p class="stats__label">confidencial, online o presencial</p>
                 </div>
               </div>
@@ -500,61 +504,88 @@
           <div class="mask" style="--pb:8px">
             <h2 class="display sesiones__title rv-slow" data-rv="mask" data-rv-d="80">Claro desde el principio: sabes lo que pagas antes de entrar.</h2>
           </div>
-          <div class="grid grid--start sesiones__grid" style="--min:320px;--gap:60px;margin-top:60px">
-            <div class="media sesiones__media">
-              <div class="media__par" data-par="42" style="--inset:-60px">
-                <div data-rv="img">
-                  <img src="https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?auto=format&amp;fit=crop&amp;w=1200&amp;q=72"
-                       alt="Detalle sereno del espacio de consulta" loading="lazy" decoding="async">
+          <p class="sesiones__lead" data-rv="up" data-rv-d="180">Cada acompañamiento tiene su duración y su precio, sin sorpresas ni letra pequeña. Elige el que te resuene o escríbeme y lo vemos juntas.</p>
+
+          <div class="tarifas">
+
+            <article class="tarifa" data-rv="up">
+              <a class="tarifa__hit" href="/tarot" data-link="tarot" aria-label="Tarot evolutivo, 80 euros: conocer más"></a>
+              <span class="tarifa__n">01</span>
+              <div class="tarifa__body">
+                <h3 class="display tarifa__name">Tarot evolutivo</h3>
+                <p class="tarifa__desc">Comprender el momento que estás viviendo, descubrir el origen de tus bloqueos y encontrar claridad para avanzar en tu camino.</p>
+                <div class="tarifa__foot">
+                  <p class="tarifa__tags">
+                    <span class="tag">90 minutos</span>
+                    <span class="tag">Online o presencial</span>
+                  </p>
+                  <span class="tarifa__link">Conocer más <span class="tarifa__arrow" aria-hidden="true">→</span></span>
                 </div>
               </div>
-            </div>
-            <div class="stack">
-              <div class="tarifas">
+              <p class="display tarifa__price"><span data-count="80">80</span><span class="tarifa__cur">€</span></p>
+            </article>
 
-                <article class="tarifa" data-rv="up">
-                  <div class="tarifa__head">
-                    <h3 class="display tarifa__name"><a href="/tarot" data-link="tarot">Tarot evolutivo</a></h3>
-                    <p class="tarifa__price">80 €</p>
-                  </div>
-                  <p class="tarifa__desc">Comprender el momento que estás viviendo, descubrir el origen de tus bloqueos y encontrar claridad para avanzar en tu camino.</p>
-                  <p class="tarifa__meta"><span>90 minutos</span><span>Online o presencial</span></p>
-                </article>
-
-                <article class="tarifa" data-rv="up" data-rv-d="80">
-                  <div class="tarifa__head">
-                    <h3 class="display tarifa__name"><a href="/constelaciones" data-link="constelaciones">Constelaciones familiares</a></h3>
-                    <p class="tarifa__price">90 €</p>
-                  </div>
-                  <p class="tarifa__desc">Observar los patrones que se repiten en tu historia familiar, sanar vínculos y recuperar tu lugar dentro del sistema.</p>
-                  <p class="tarifa__meta"><span>90 minutos</span><span>Individual · online o presencial</span></p>
-                </article>
-
-                <article class="tarifa" data-rv="up" data-rv-d="160">
-                  <div class="tarifa__head">
-                    <h3 class="display tarifa__name"><a href="/meditacion" data-link="meditacion">Meditación guiada</a></h3>
-                    <p class="tarifa__price">35 €</p>
-                  </div>
-                  <p class="tarifa__desc">Meditaciones personalizadas para reducir la ansiedad, conectar con tu interior y fortalecer el bienestar emocional.</p>
-                  <p class="tarifa__meta"><span>45–60 minutos</span><span>Online</span></p>
-                </article>
-
-                <article class="tarifa" data-rv="up" data-rv-d="240">
-                  <div class="tarifa__head">
-                    <h3 class="display tarifa__name"><a href="/acompanamiento" data-link="acompanamiento">Acompañamiento de crecimiento personal</a></h3>
-                    <p class="tarifa__price">95 €</p>
-                  </div>
-                  <p class="tarifa__desc">Un proceso para transformar tu vida, fortalecer tu autoestima, sanar heridas emocionales y mirarte de otra manera.</p>
-                  <p class="tarifa__meta"><span>90 minutos</span><span>Online o presencial</span></p>
-                </article>
-
+            <article class="tarifa" data-rv="up" data-rv-d="90">
+              <a class="tarifa__hit" href="/constelaciones" data-link="constelaciones" aria-label="Constelaciones familiares, 90 euros: conocer más"></a>
+              <span class="tarifa__n">02</span>
+              <div class="tarifa__body">
+                <h3 class="display tarifa__name">Constelaciones familiares</h3>
+                <p class="tarifa__desc">Observar los patrones que se repiten en tu historia familiar, sanar vínculos y recuperar tu lugar dentro del sistema.</p>
+                <div class="tarifa__foot">
+                  <p class="tarifa__tags">
+                    <span class="tag">90 minutos</span>
+                    <span class="tag">Individual</span>
+                    <span class="tag">Online o presencial</span>
+                  </p>
+                  <span class="tarifa__link">Conocer más <span class="tarifa__arrow" aria-hidden="true">→</span></span>
+                </div>
               </div>
-              <p class="note tarifas__note" data-rv="up" data-rv-d="280">Tarifa para España, por sesión. Si me escribes desde Argentina o desde otro país, dímelo y te confirmo el precio en tu moneda.</p>
-              <button class="btn" type="button" data-open-booking data-rv="up" data-rv-d="320" style="--ty:20px;--o-dur:.8s;--t-dur:.8s;align-self:flex-start;margin-top:30px">Reservar sesión <span aria-hidden="true">→</span></button>
-            </div>
+              <p class="display tarifa__price"><span data-count="90">90</span><span class="tarifa__cur">€</span></p>
+            </article>
+
+            <article class="tarifa" data-rv="up" data-rv-d="180">
+              <a class="tarifa__hit" href="/meditacion" data-link="meditacion" aria-label="Meditación guiada, 35 euros: conocer más"></a>
+              <span class="tarifa__n">03</span>
+              <div class="tarifa__body">
+                <h3 class="display tarifa__name">Meditación guiada</h3>
+                <p class="tarifa__desc">Meditaciones personalizadas para reducir la ansiedad, conectar con tu interior y fortalecer el bienestar emocional.</p>
+                <div class="tarifa__foot">
+                  <p class="tarifa__tags">
+                    <span class="tag">45–60 minutos</span>
+                    <span class="tag">Online</span>
+                  </p>
+                  <span class="tarifa__link">Conocer más <span class="tarifa__arrow" aria-hidden="true">→</span></span>
+                </div>
+              </div>
+              <p class="display tarifa__price"><span data-count="35">35</span><span class="tarifa__cur">€</span></p>
+            </article>
+
+            <article class="tarifa tarifa--dest" data-rv="up" data-rv-d="270">
+              <a class="tarifa__hit" href="/acompanamiento" data-link="acompanamiento" aria-label="Acompañamiento de crecimiento personal, 95 euros: conocer más"></a>
+              <span class="tarifa__n">04</span>
+              <div class="tarifa__body">
+                <h3 class="display tarifa__name">Acompañamiento de crecimiento personal</h3>
+                <p class="tarifa__desc">Un proceso para transformar tu vida, fortalecer tu autoestima, sanar heridas emocionales y mirarte de otra manera.</p>
+                <div class="tarifa__foot">
+                  <p class="tarifa__tags">
+                    <span class="tag">90 minutos</span>
+                    <span class="tag">Proceso</span>
+                    <span class="tag">Online o presencial</span>
+                  </p>
+                  <span class="tarifa__link">Conocer más <span class="tarifa__arrow" aria-hidden="true">→</span></span>
+                </div>
+              </div>
+              <p class="display tarifa__price"><span data-count="95">95</span><span class="tarifa__cur">€</span></p>
+            </article>
+
           </div>
 
-          <div class="grid grid--start" style="--min:300px;--gap:56px;margin-top:80px">
+          <div class="tarifas__foot">
+            <p class="note tarifas__note" data-rv="up" data-rv-d="120">Tarifa para España, por sesión. Si me escribes desde Argentina o desde otro país, dímelo y te confirmo el precio en tu moneda.</p>
+            <button class="btn btn--lg" type="button" data-open-booking data-rv="up" data-rv-d="180" style="--ty:20px;--o-dur:.8s;--t-dur:.8s">Reservar sesión <span aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="grid grid--start" style="--min:300px;--gap:56px;margin-top:96px">
             <div data-rv="up">
               <h3 class="display sub-h3--lg" style="margin:0 0 22px">Cómo se reserva</h3>
               <div class="rowlist">
@@ -578,24 +609,44 @@
       </section>
 
       <!-- Próximamente -->
-      <section class="sec pt-0 pb-130" id="proximamente">
-        <div class="wrap">
-          <div class="proximo" data-rv="up" style="--ty:26px">
-            <div class="proximo__text">
-              <p class="eyebrow eyebrow--sage" style="margin-bottom:16px">Próximamente</p>
-              <h2 class="display proximo__title">Lo que viene en Sanar con Amor.</h2>
-              <p class="proximo__copy">Estoy preparando nuevos espacios para llegar más lejos y acompañar también en grupo. Si quieres que te avise en cuanto abra alguno, escríbeme y te apunto a la lista.</p>
-              <a class="btn btn--sm" href="https://wa.me/34672298203?text=Hola%20Rosa%20Elena%2C%20quiero%20que%20me%20avises%20cuando%20abras%20nuevos%20talleres%20o%20formaciones." target="_blank" rel="noopener" style="margin-top:30px">Avísame <span aria-hidden="true">→</span></a>
+      <section class="proximo" id="proximamente">
+        <div class="marquee marquee--proximo" aria-hidden="true">
+          <div class="marquee__track">
+            <span>cursos online</span><span>·</span>
+            <span>talleres presenciales</span><span>·</span>
+            <span>retiros</span><span>·</span>
+            <span>formaciones</span><span>·</span>
+            <span>conferencias</span><span>·</span>
+            <span>cursos online</span><span>·</span>
+            <span>talleres presenciales</span><span>·</span>
+            <span>retiros</span><span>·</span>
+            <span>formaciones</span><span>·</span>
+            <span>conferencias</span><span>·</span>
+          </div>
+        </div>
+
+        <div class="sec pt-120 pb-120">
+          <div class="wrap grid grid--start" style="--min:330px;--gap:72px">
+            <div>
+              <div class="mask" style="--mb:30px">
+                <p class="eyebrow eyebrow--pale" data-rv="mask">Próximamente</p>
+              </div>
+              <div class="mask" style="--pb:8px">
+                <h2 class="display proximo__title rv-slow" data-rv="mask" data-rv-d="80">Esto no acaba en la consulta.</h2>
+              </div>
+              <p class="proximo__copy" data-rv="up" data-rv-d="180" style="--ty:20px">Estoy preparando espacios para llegar más lejos y acompañar también en grupo: los primeros abrirán con plazas contadas. Si quieres que te avise en cuanto salga alguno, escríbeme y te apunto a la lista.</p>
+              <a class="btn btn--paper btn--lg" href="https://wa.me/34672298203?text=Hola%20Rosa%20Elena%2C%20quiero%20que%20me%20avises%20cuando%20abras%20nuevos%20talleres%20o%20formaciones." target="_blank" rel="noopener" data-rv="up" data-rv-d="260" style="--ty:20px;margin-top:36px">Apúntame a la lista <span aria-hidden="true">→</span></a>
             </div>
+
             <ul class="proximo__list">
-              <li>Cursos online</li>
-              <li>Talleres presenciales</li>
-              <li>Retiros</li>
-              <li>Formación en tarot evolutivo</li>
-              <li>Formación en constelaciones familiares</li>
-              <li>Meditaciones en grupo</li>
-              <li>Conferencias</li>
-              <li>Directos</li>
+              <li data-rv="up" style="--ty:18px"><span class="proximo__i">01</span><span class="proximo__q">Cursos online</span></li>
+              <li data-rv="up" data-rv-d="70" style="--ty:18px"><span class="proximo__i">02</span><span class="proximo__q">Talleres presenciales</span></li>
+              <li data-rv="up" data-rv-d="140" style="--ty:18px"><span class="proximo__i">03</span><span class="proximo__q">Retiros</span></li>
+              <li data-rv="up" data-rv-d="210" style="--ty:18px"><span class="proximo__i">04</span><span class="proximo__q">Formación en tarot evolutivo</span></li>
+              <li data-rv="up" data-rv-d="280" style="--ty:18px"><span class="proximo__i">05</span><span class="proximo__q">Formación en constelaciones familiares</span></li>
+              <li data-rv="up" data-rv-d="350" style="--ty:18px"><span class="proximo__i">06</span><span class="proximo__q">Meditaciones en grupo</span></li>
+              <li data-rv="up" data-rv-d="420" style="--ty:18px"><span class="proximo__i">07</span><span class="proximo__q">Conferencias</span></li>
+              <li data-rv="up" data-rv-d="490" style="--ty:18px"><span class="proximo__i">08</span><span class="proximo__q">Directos</span></li>
             </ul>
           </div>
         </div>
@@ -2020,6 +2071,6 @@
 
 </div>
 
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/site.js?v=20260727b" defer></script>
 </body>
 </html>

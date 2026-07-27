@@ -1324,9 +1324,10 @@ img { display: block; }
   align-items: flex-end;
   justify-content: space-between;
   margin-top: 24px;
-  padding: 34px;
+  padding: 40px;
   background: rgba(241, 240, 234, .06);
   border: 1px solid rgba(241, 240, 234, .14);
+  box-shadow: inset 3px 0 0 var(--sage);
   --ty: 26px;
   transition:
     opacity .9s ease,
@@ -1335,6 +1336,13 @@ img { display: block; }
 }
 
 .svc-wide:hover { background: rgba(241, 240, 234, .11); }
+
+.svc-wide__more span {
+  display: inline-block;
+  transition: transform .45s var(--ease);
+}
+
+.svc-wide:hover .svc-wide__more span { transform: translateX(7px); }
 
 .svc-wide__text { flex: 1 1 420px; min-width: 0; }
 
@@ -1370,7 +1378,7 @@ img { display: block; }
 .svc-wide__more:hover { color: var(--paper); }
 
 .svc-wide__side {
-  flex: 0 1 230px;
+  flex: 0 1 300px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1379,6 +1387,7 @@ img { display: block; }
 
 .svc-wide__meta {
   font-size: 11px;
+  line-height: 1.7;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: rgba(241, 240, 234, .55);
@@ -1414,142 +1423,264 @@ img { display: block; }
   max-width: 30ch;
 }
 
-.sesiones__media { --h: min(70vh, 520px); }
-
-/* En una sola columna la foto quedaba entre el titular y los precios, que es
-   lo que la persona ha venido a ver: ahí baja y se recorta. Con --min:320px y
-   40px de margen a cada lado, la rejilla cae a una columna por debajo de
-   780px. */
-@media (max-width: 779px) {
-  .sesiones__grid .sesiones__media { order: 2; --h: min(38vh, 300px); }
-  .sesiones__grid .stack { order: 1; }
+.sesiones__lead {
+  font-size: 17px;
+  line-height: 1.66;
+  color: var(--body);
+  max-width: 58ch;
+  margin: 26px 0 0;
+  --ty: 20px;
 }
 
-.tarifas { border-top: 1px solid var(--line); }
+/* La rejilla dibuja las líneas: 1px de hueco sobre fondo de línea deja una
+   retícula continua sin bordes dobles entre tarjetas contiguas.
+
+   Dos columnas fijas, no auto-fit: son cuatro tarifas y con auto-fit entraban
+   tres en la primera fila, dejando a la cuarta sola con un hueco al lado. */
+.tarifas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 66px;
+}
+
+@media (min-width: 900px) {
+  .tarifas { grid-template-columns: 1fr 1fr; }
+}
 
 .tarifa {
-  padding: 26px 0;
-  border-bottom: 1px solid var(--line);
-  --ty: 20px;
-  --o-dur: .8s;
-  --t-dur: .8s;
+  position: relative;
+  display: flex;
+  gap: 26px;
+  padding: 38px 34px 34px;
+  background: var(--paper);
+  --ty: 30px;
+  transition:
+    opacity .9s ease,
+    transform .9s var(--ease),
+    background .45s ease;
 }
 
-.tarifa__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px 24px;
+.tarifa:hover { background: var(--band); }
+
+/* Superficie clicable que cubre la tarjeta entera sin anidar controles. */
+.tarifa__hit {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
+
+/* El cuarto es el único que no es una disciplina sino un proceso. Se distingue
+   con la etiqueta «Proceso», no con un color: cualquier acento en el borde
+   izquierdo cae justo en la medianera de la rejilla y se lee como separador. */
+
+.tarifa__n {
+  flex: none;
+  font-size: 12px;
+  letter-spacing: .2em;
+  color: var(--sage-mid);
+  padding-top: 7px;
+}
+
+.tarifa__body { flex: 1 1 auto; min-width: 0; }
 
 .tarifa__name {
-  font-size: 26px;
+  font-size: clamp(22px, 2.1vw, 27px);
   line-height: 1.12;
-  letter-spacing: -.02em;
+  letter-spacing: -.025em;
   margin: 0;
-  min-width: 0;
-}
-
-.tarifa__name a { color: inherit; }
-.tarifa__name a:hover { color: var(--sage-mid); }
-
-.tarifa__price {
-  flex: none;
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: -.03em;
-  margin: 0;
-  white-space: nowrap;
 }
 
 .tarifa__desc {
-  font-size: 16px;
+  font-size: 15.5px;
   line-height: 1.64;
   color: var(--body);
-  margin: 12px 0 0;
-  max-width: 54ch;
+  margin: 14px 0 0;
+  max-width: 46ch;
 }
 
-.tarifa__meta {
+/* El enlace se separa con margin-left:auto y no con space-between: cuando las
+   etiquetas ocupan la línea entera y el enlace baja, así sigue a la derecha en
+   vez de saltar al principio de la nueva línea. */
+.tarifa__foot {
   display: flex;
   flex-wrap: wrap;
-  margin: 14px 0 0;
-  font-size: 11px;
-  letter-spacing: .14em;
+  align-items: center;
+  gap: 14px 20px;
+  margin: 24px 0 0;
+}
+
+.tarifa__foot .tarifa__link { margin-left: auto; }
+
+.tarifa__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--sage-dim);
+  color: var(--muted);
+  transition: border-color .45s ease, color .45s ease;
 }
 
-/* El separador va detrás, no delante: si la lista parte en dos líneas, el
-   punto se queda al final de la primera en vez de abrir la segunda. */
-.tarifa__meta span:not(:last-child)::after {
-  content: "·";
-  margin: 0 10px;
-  opacity: .6;
+.tarifa:hover .tag {
+  border-color: rgba(30, 31, 27, .3);
+  color: var(--body-strong);
 }
 
-.tarifas__note { margin: 24px 0 0; max-width: 56ch; }
+.tarifa__price {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: clamp(34px, 3.4vw, 46px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: .9;
+  margin: 0;
+  transition: transform .5s var(--ease);
+}
+
+.tarifa:hover .tarifa__price { transform: translateY(-3px); }
+
+.tarifa__cur { font-size: .5em; letter-spacing: -.02em; color: var(--sage-mid); }
+
+.tarifa__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--sage-mid);
+  transition: color .45s ease;
+}
+
+.tarifa:hover .tarifa__link { color: var(--ink); }
+
+.tarifa__arrow {
+  display: inline-block;
+  transition: transform .45s var(--ease);
+}
+
+.tarifa:hover .tarifa__arrow { transform: translateX(7px); }
+
+.tarifas__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px 40px;
+  margin-top: 38px;
+}
+
+.tarifas__note { margin: 0; max-width: 62ch; --ty: 16px; }
+
+/* En una sola columna el precio deja de caber junto al texto: sube a la
+   primera línea, en la misma altura que el número. */
+@media (max-width: 560px) {
+  .tarifa {
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 18px;
+    padding: 30px 24px 28px;
+  }
+
+  /* El precio va en el DOM detrás del texto para que quien navegue con lector
+     de pantalla oiga antes de qué es; aquí sube a la primera línea. */
+  .tarifa__n { order: 1; }
+  .tarifa__price { order: 2; margin-left: auto; }
+  .tarifa__body { order: 3; flex-basis: 100%; margin-top: 18px; }
+}
 
 /* --------------------------------------------------------------------------
    Inicio — próximamente
    -------------------------------------------------------------------------- */
 
 .proximo {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
-  padding: 48px;
-  background: var(--band);
-  --ty: 26px;
+  background: var(--forest);
+  color: var(--paper);
 }
 
-.proximo__text { flex: 1 1 380px; min-width: 0; }
+.marquee--proximo {
+  border-bottom: 1px solid rgba(241, 240, 234, .14);
+  padding: 20px 0;
+}
+
+.marquee--proximo .marquee__track {
+  --speed: 44s;
+  --space: 40px;
+  font-size: clamp(19px, 2.2vw, 27px);
+  letter-spacing: -.01em;
+  color: rgba(241, 240, 234, .34);
+}
 
 .proximo__title {
-  font-size: clamp(28px, 3.2vw, 44px);
-  line-height: 1.08;
+  font-size: clamp(30px, 3.6vw, 54px);
+  line-height: 1.04;
   letter-spacing: -.02em;
   margin: 0;
-  max-width: 18ch;
+  max-width: 16ch;
 }
 
 .proximo__copy {
   font-size: 16.5px;
-  line-height: 1.66;
-  color: var(--body);
-  margin: 20px 0 0;
-  max-width: 52ch;
+  line-height: 1.7;
+  color: rgba(241, 240, 234, .7);
+  margin: 26px 0 0;
+  max-width: 50ch;
 }
 
 .proximo__list {
-  flex: 1 1 320px;
-  min-width: 0;
-  align-self: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  columns: 190px 2;
-  column-gap: 30px;
+  border-top: 1px solid rgba(241, 240, 234, .16);
 }
 
 .proximo__list li {
-  position: relative;
-  break-inside: avoid;
-  padding: 11px 0 11px 22px;
-  font-size: 16px;
-  color: var(--body-strong);
-  border-bottom: 1px solid rgba(30, 31, 27, .12);
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 17px 6px;
+  border-bottom: 1px solid rgba(241, 240, 234, .16);
+  --ty: 18px;
+  --o-dur: .8s;
+  --t-dur: .8s;
+  transition:
+    opacity .8s ease,
+    transform .8s var(--ease),
+    background .45s ease;
 }
 
-.proximo__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 21px;
-  width: 9px;
-  height: 1px;
-  background: var(--sage-mid);
+.proximo__list li:hover { background: rgba(241, 240, 234, .05); }
+
+.proximo__i {
+  flex: none;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  color: var(--sage);
 }
+
+.proximo__q {
+  font-size: clamp(16.5px, 1.6vw, 20px);
+  letter-spacing: -.015em;
+  color: rgba(241, 240, 234, .92);
+  transition: transform .45s var(--ease);
+}
+
+.proximo__list li:hover .proximo__q { transform: translateX(6px); }
 
 /* --------------------------------------------------------------------------
    Inicio — sobre mí
@@ -2870,12 +3001,8 @@ textarea.field { resize: vertical; }
 /* Bloques anchos: en pantallas estrechas el aire interior sobra y el precio
    deja de caber en la misma línea que el nombre. */
 @media (max-width: 620px) {
-  .svc-wide { padding: 26px 22px; gap: 26px; }
+  .svc-wide { padding: 28px 24px; gap: 26px; }
   .svc-wide__price { font-size: 34px; }
-  .proximo { padding: 32px 24px; gap: 30px; }
-  .tarifa__head { flex-wrap: wrap; }
-  .tarifa__name { flex: 1 1 100%; }
-  .tarifa__price { font-size: 23px; }
 }
 
 /* --------------------------------------------------------------------------
