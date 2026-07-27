@@ -3,13 +3,13 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/constelaciones", "destination": "/index.html" },
-    { "source": "/tarot", "destination": "/index.html" },
-    { "source": "/meditacion", "destination": "/index.html" },
-    { "source": "/acompanamiento", "destination": "/index.html" },
-    { "source": "/contacto", "destination": "/index.html" },
-    { "source": "/aviso-legal", "destination": "/index.html" },
-    { "source": "/privacidad", "destination": "/index.html" }
+    { "source": "/constelaciones", "destination": "/" },
+    { "source": "/tarot", "destination": "/" },
+    { "source": "/meditacion", "destination": "/" },
+    { "source": "/acompanamiento", "destination": "/" },
+    { "source": "/contacto", "destination": "/" },
+    { "source": "/aviso-legal", "destination": "/" },
+    { "source": "/privacidad", "destination": "/" }
   ],
   "headers": [
     {

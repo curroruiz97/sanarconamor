@@ -27,7 +27,12 @@ class Handler(SimpleHTTPRequestHandler):
     def translate_path(self, path):
         limpio = path.split("?", 1)[0].split("#", 1)[0].rstrip("/") or "/"
         if limpio in REESCRITURAS:
-            path = REESCRITURAS[limpio]
+            # El destino de las reescrituras es "/" (ver SITIO.md). Aquí se
+            # resuelve directamente al archivo: si se dejara en "/", el
+            # servidor lo trataría como carpeta y respondería un 301 hacia
+            # "/tarot/", que no es lo que hace Vercel.
+            destino = REESCRITURAS[limpio]
+            path = "/index.html" if destino.rstrip("/") == "" else destino
         return super().translate_path(path)
 
     def end_headers(self):

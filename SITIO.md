@@ -74,6 +74,22 @@ Al añadir una página hay que tocar cinco sitios: el `<main data-page="…">` e
 `index.html`, `ROUTES` en `assets/js/site.js`, `vercel.json`, `_redirects` y los
 enlaces (desplegable de la cabecera, menú móvil y pie).
 
+**Las reescrituras de `vercel.json` van a `/`, no a `/index.html`.** Con
+`cleanUrls: true`, Vercel responde 308 en `/index.html` y redirige a `/`, así
+que una reescritura cuyo destino sea `/index.html` no resuelve y la ruta acaba
+en 404. Estuvo así desde el primer despliegue: en producción, abrir o recargar
+`/tarot` daba 404 y solo funcionaba la navegación desde dentro del sitio. En
+`_redirects` (Netlify) sí se apunta a `/index.html`, que es lo que espera.
+
+Merece la pena comprobarlo después de cada despliegue, porque en local no se
+reproduce:
+
+```bash
+for r in / /constelaciones /tarot /meditacion /acompanamiento /contacto; do
+  echo "$r $(curl -s -o /dev/null -w '%{http_code}' https://sanarconamor.vercel.app$r)"
+done
+```
+
 Ella habló de «precio España», lo que da a entender que hay otra tarifa para
 Argentina. Como no la tenemos, la sección lo dice en una nota y ofrece
 confirmarla por mensaje.
