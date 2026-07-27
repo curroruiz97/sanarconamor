@@ -1074,6 +1074,21 @@ img { display: block; }
   color: var(--paper);
 }
 
+/* La frase de marca es tres veces más larga que un titular corto: al tamaño
+   de arriba ocuparía media pantalla. Baja de cuerpo y gana interlínea para
+   que se lea como una frase y no como un cartel. */
+.hero-a__title--frase {
+  font-size: clamp(24px, 2.9vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.025em;
+}
+
+/* La frase necesita más ancho que el subtítulo para caber en tres líneas: en
+   dos columnas iguales salían cuatro y quedaba un hueco bajo el subtítulo. */
+@media (min-width: 1000px) {
+  .hero-a__grid { grid-template-columns: 1.5fr 1fr; }
+}
+
 .hero-a__sub {
   font-size: 16.5px;
   line-height: 1.6;
@@ -1315,102 +1330,13 @@ img { display: block; }
 
 .svc-card:hover .svc-card__arrow { transform: translateX(7px); }
 
-/* El cuarto acompañamiento es un proceso, no una disciplina con página propia:
-   ocupa una banda ancha bajo las tres tarjetas en vez de una cuarta columna. */
-.svc-wide {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 34px;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-top: 24px;
-  padding: 40px;
-  background: rgba(241, 240, 234, .06);
-  border: 1px solid rgba(241, 240, 234, .14);
-  box-shadow: inset 3px 0 0 var(--sage);
-  --ty: 26px;
-  transition:
-    opacity .9s ease,
-    transform .9s var(--ease),
-    background .4s ease;
-}
+/* Cuatro tarjetas: dos arriba y dos abajo. Con auto-fit entraban las cuatro
+   en una fila y las fotos quedaban en tiras estrechas. */
+.servicios__grid { grid-template-columns: 1fr; }
 
-.svc-wide:hover { background: rgba(241, 240, 234, .11); }
-
-.svc-wide__more span {
-  display: inline-block;
-  transition: transform .45s var(--ease);
-}
-
-.svc-wide:hover .svc-wide__more span { transform: translateX(7px); }
-
-.svc-wide__text { flex: 1 1 420px; min-width: 0; }
-
-.svc-wide__title {
-  font-size: clamp(26px, 2.6vw, 34px);
-  line-height: 1.1;
-  letter-spacing: -.02em;
-  margin: 0;
-}
-
-.svc-wide__copy {
-  font-size: 16px;
-  line-height: 1.66;
-  color: rgba(241, 240, 234, .72);
-  max-width: 62ch;
-  margin: 16px 0 0;
-}
-
-.svc-wide__title a { color: inherit; }
-.svc-wide__title a:hover { color: var(--sage-light); }
-
-.svc-wide__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  font-size: 11px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--sage-light);
-}
-
-.svc-wide__more:hover { color: var(--paper); }
-
-.svc-wide__side {
-  flex: 0 1 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.svc-wide__meta {
-  font-size: 11px;
-  line-height: 1.7;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(241, 240, 234, .55);
-  margin: 0;
-}
-
-.svc-wide__price {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  font-size: 40px;
-  font-weight: 500;
-  letter-spacing: -.03em;
-  line-height: 1;
-  margin: 0;
-}
-
-.svc-wide__price span {
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(241, 240, 234, .5);
+@media (min-width: 900px) {
+  .servicios__grid { grid-template-columns: 1fr 1fr; }
+  .servicios__grid .svc-card__media { height: 330px; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1586,6 +1512,19 @@ img { display: block; }
 }
 
 .tarifas__note { margin: 0; max-width: 62ch; --ty: 16px; }
+
+/* Reserva y condiciones, plegadas: reutilizan el acordeón de las preguntas
+   frecuentes, pero su contenido es una lista y no un párrafo, así que el
+   relleno va en .faq__inner y el alto máximo sube. */
+.acor {
+  border-top: 1px solid var(--line);
+  margin-top: 84px;
+}
+
+.faq__item--wide.is-open .faq__body { max-height: 620px; }
+
+.faq__inner { padding: 0 0 30px; }
+.faq__inner .rowlist { border-top: 0; }
 
 /* En una sola columna el precio deja de caber junto al texto: sube a la
    primera línea, en la misma altura que el número. */
@@ -2272,62 +2211,429 @@ textarea.field { resize: vertical; }
 
 .aviso-modal__cta:hover { background: var(--sage-mid); color: var(--paper); }
 
-.ficha { max-width: 1080px; padding: 42px; margin: auto; }
-.ficha__media { height: 360px; }
-.ficha__name { font-size: 32px; margin: 24px 0 8px; }
+/* --------------------------------------------------------------------------
+   Mi historia — capa a pantalla completa
 
-.ficha__role {
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 0;
+   Cambia de registro respecto al resto del sitio: fondo oscuro, retrato fijo
+   a la izquierda y el relato desplazándose a la derecha, como entrar en una
+   habitación distinta. En una columna, el retrato se convierte en portada.
+   -------------------------------------------------------------------------- */
+
+.historia {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+  animation: scam-fadein .4s ease both;
 }
 
-.ficha__bio {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--body-strong);
-  margin: 0;
+.historia__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(241, 240, 234, .12);
+  z-index: 4;
 }
 
-.ficha__bio + .ficha__bio { margin-top: 18px; }
+.historia__progress-bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--sage);
+  transform-origin: left;
+  transition: width .12s linear;
+}
 
-.ficha__label {
-  font-size: 11px;
-  letter-spacing: .28em;
+.historia__close {
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border: 1px solid rgba(241, 240, 234, .28);
+  background: rgba(30, 31, 27, .55);
+  backdrop-filter: blur(6px);
+  color: var(--paper);
+  font-size: 10.5px;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--sage-dim);
-  margin: 0 0 16px;
+  cursor: pointer;
+  transition: background .35s ease, border-color .35s ease;
 }
 
-.ficha__methods {
-  list-style: none;
-  padding: 0;
+.historia__close:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+.historia__cols {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Columna fija: retrato, identidad, audio e índice. */
+.historia__aside {
+  position: relative;
+  flex: 0 0 40%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(241, 240, 234, .13);
+  overflow: hidden;
+}
+
+.historia__portrait {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.historia__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  transform: scale(1.04);
+  animation: scam-hist-zoom 2.4s var(--ease) both;
+}
+
+@keyframes scam-hist-zoom {
+  from { transform: scale(1.13); }
+  to { transform: scale(1.04); }
+}
+
+.historia__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(30, 31, 27, .1) 0%, rgba(30, 31, 27, .72) 62%, var(--ink) 100%);
+}
+
+.historia__id {
+  position: relative;
+  padding: 0 40px 4px;
+  margin-top: -84px;
+}
+
+.historia__eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin: 0 0 12px;
+}
+
+.historia__name {
+  font-size: clamp(26px, 2.4vw, 36px);
+  letter-spacing: -.025em;
+  line-height: 1.05;
   margin: 0;
+}
+
+.historia__role {
+  font-size: 13.5px;
+  color: rgba(241, 240, 234, .58);
+  margin: 10px 0 0;
+}
+
+/* Reproductor */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 26px 40px 0;
+  padding: 18px;
+  border: 1px solid rgba(241, 240, 234, .18);
+  background: rgba(241, 240, 234, .05);
+}
+
+.player__play {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(241, 240, 234, .34);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+}
+
+.player__play:hover {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: var(--on-sage);
+}
+
+.player__tri {
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-left: 11px solid currentColor;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+
+.player__pause {
+  display: none;
+  width: 11px;
+  height: 13px;
+  border-left: 3.5px solid currentColor;
+  border-right: 3.5px solid currentColor;
+}
+
+.player.is-playing .player__tri { display: none; }
+.player.is-playing .player__pause { display: block; }
+
+.player__body { flex: 1 1 auto; min-width: 0; }
+
+.player__label {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(241, 240, 234, .55);
+  margin: 0 0 12px;
+}
+
+/* La onda son barras fijas; encima, una máscara del color del fondo tapa por
+   la derecha lo que aún no ha sonado. Así el progreso se ve sin repintar. */
+.player__bar {
+  position: relative;
+  height: 30px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.player__wave {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.player__wave i {
+  flex: 1 1 auto;
+  height: var(--h, 40%);
+  background: var(--sage);
+  opacity: .95;
+}
+
+.player__mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #22231F;
+  opacity: .82;
+  transition: left .12s linear;
+}
+
+.player__time {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 0;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: rgba(241, 240, 234, .5);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Índice de capítulos */
+.historia__nav {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 15.5px;
-  color: var(--body-strong);
+  padding: 26px 40px 34px;
+  gap: 2px;
 }
 
-.ficha__years {
+.historia__cap {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 15.5px;
-  color: var(--body-strong);
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: rgba(241, 240, 234, .5);
+  transition: color .35s ease, transform .35s var(--ease);
 }
 
-.ficha__year {
+.historia__cap span {
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(241, 240, 234, .3);
+  transition: color .35s ease;
+}
+
+.historia__cap:hover { color: var(--paper); transform: translateX(4px); }
+
+.historia__cap.is-on { color: var(--paper); }
+.historia__cap.is-on span { color: var(--sage); }
+
+/* Columna del relato */
+.historia__doc {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.historia__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 122px 56px 110px;
+}
+
+.historia__kicker {
+  font-size: 10.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin: 0 0 28px;
+}
+
+.historia__lead {
+  font-size: clamp(23px, 2.3vw, 32px);
+  line-height: 1.24;
+  letter-spacing: -.02em;
+  color: var(--paper);
+  margin: 0;
+}
+
+.cap { margin-top: 66px; }
+
+.cap__label {
   display: flex;
-  gap: 16px;
-  border-bottom: 1px solid var(--line-soft);
-  padding-bottom: 9px;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(241, 240, 234, .16);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(241, 240, 234, .55);
 }
 
-.ficha__year:last-child { border-bottom: none; }
-.ficha__year span:first-child { color: var(--sage-mid); min-width: 52px; }
+.cap__n { color: var(--sage); }
+
+.cap p {
+  font-size: 17.5px;
+  line-height: 1.78;
+  color: rgba(241, 240, 234, .82);
+  margin: 0 0 18px;
+}
+
+.cap p:last-child { margin-bottom: 0; }
+
+.cap__quote {
+  margin: 34px 0 0;
+  padding: 0 0 0 24px;
+  border-left: 2px solid var(--sage);
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.34;
+  letter-spacing: -.02em;
+  font-style: italic;
+  color: var(--paper);
+}
+
+.historia__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 40px;
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(241, 240, 234, .16);
+}
+
+.historia__meta-label {
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin: 0 0 18px;
+}
+
+.historia__methods {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 15.5px;
+  line-height: 2;
+  color: rgba(241, 240, 234, .78);
+}
+
+.historia__meta-copy {
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: rgba(241, 240, 234, .78);
+  margin: 0;
+}
+
+.historia__cta {
+  margin-top: 66px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(241, 240, 234, .16);
+}
+
+.historia__cta-title {
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  margin: 0 0 28px;
+}
+
+.historia__cta .btn {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+.historia__cta .btn:hover { background: var(--sage-light); border-color: var(--sage-light); }
+
+/* En una columna el retrato pasa a ser la portada del relato: ocupa la
+   primera pantalla y el texto sube por encima al desplazarse. */
+@media (max-width: 979px) {
+  .historia__cols { flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
+
+  .historia__aside {
+    flex: none;
+    max-width: none;
+    border-right: 0;
+    border-bottom: 1px solid rgba(241, 240, 234, .13);
+  }
+
+  .historia__portrait { height: 46vh; flex: none; }
+  .historia__id { padding: 0 24px; margin-top: -76px; }
+  .player { margin: 24px 24px 0; }
+  .historia__nav { display: none; }
+
+  .historia__doc { overflow: visible; }
+  .historia__inner { padding: 46px 24px 90px; }
+  .cap { margin-top: 52px; }
+  .cap p { font-size: 16.5px; }
+  .historia__close { top: 18px; right: 18px; padding: 11px 14px; }
+}
 
 /* --------------------------------------------------------------------------
    Reserva a pantalla completa
@@ -2996,13 +3302,6 @@ textarea.field { resize: vertical; }
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
-}
-
-/* Bloques anchos: en pantallas estrechas el aire interior sobra y el precio
-   deja de caber en la misma línea que el nombre. */
-@media (max-width: 620px) {
-  .svc-wide { padding: 28px 24px; gap: 26px; }
-  .svc-wide__price { font-size: 34px; }
 }
 
 /* --------------------------------------------------------------------------

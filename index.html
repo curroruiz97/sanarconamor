@@ -25,7 +25,7 @@
      un año, así que sin cambiar la dirección nadie que ya haya entrado vuelve a
      descargar el CSS ni el JS. HAY QUE SUBIRLO EN CADA CAMBIO de estos dos
      archivos, aquí y en el <script> del final. -->
-<link rel="stylesheet" href="/assets/css/site.css?v=20260727b">
+<link rel="stylesheet" href="/assets/css/site.css?v=20260727d">
 <!-- Datos estructurados. Al contratar el dominio definitivo hay que cambiar
      la base de las URL, aquí y en <link rel="canonical">. -->
 <script type="application/ld+json">
@@ -284,9 +284,9 @@
           <div class="mask" style="--pb:2px">
             <p class="hero-a__eyebrow" data-rv="mask">Acompañamiento espiritual · online y presencial</p>
           </div>
-          <div class="grid grid--end" style="--min:420px;--gap:48px">
+          <div class="grid grid--end hero-a__grid" style="--min:420px;--gap:48px">
             <div class="mask" style="--pb:4px">
-              <h1 class="display hero-a__title rv-slow" data-rv="mask" data-rv-d="90">Volver a casa, dentro de ti.</h1>
+              <h1 class="display hero-a__title hero-a__title--frase rv-slow" data-rv="mask" data-rv-d="90">Transforma tu dolor en amor, tu historia en fuerza y tu vida en un nuevo comienzo.</h1>
             </div>
             <div class="mask">
               <p class="hero-a__sub rv-slow" data-rv="mask" data-rv-d="200">Constelaciones familiares, tarot evolutivo y meditación para mirar lo que duele con ternura y devolverle el orden a tu historia.</p>
@@ -433,10 +433,10 @@
             <p class="eyebrow eyebrow--light" data-rv="mask">Acompañamientos</p>
           </div>
           <div class="mask" style="--pb:8px">
-            <h2 class="display servicios__title rv-slow" data-rv="mask" data-rv-d="80">Tres caminos que se sostienen entre sí.</h2>
+            <h2 class="display servicios__title rv-slow" data-rv="mask" data-rv-d="80">Cuatro caminos que se sostienen entre sí.</h2>
           </div>
           <p class="servicios__lead" data-rv="up" data-rv-d="180" style="--ty:22px">Puedes empezar por donde te resuene. En la primera conversación vemos juntas cuál es la puerta de entrada para tu momento.</p>
-          <div class="grid" style="--min:300px;--gap:24px;margin-top:64px">
+          <div class="grid servicios__grid" style="--min:300px;--gap:24px;margin-top:64px">
 
             <div class="svc-card" data-rv="up">
               <span class="media svc-card__media">
@@ -477,20 +477,19 @@
               <span class="svc-card__more">Conocer más <span class="svc-card__arrow" aria-hidden="true">→</span></span>
             </div>
 
-          </div>
-
-          <div class="svc-wide" data-rv="up" data-rv-d="120">
-            <div class="svc-wide__text">
+            <div class="svc-card" data-rv="up" data-rv-d="330">
+              <span class="media svc-card__media">
+                <span class="svc-card__zoom">
+                  <img src="https://images.unsplash.com/photo-1503891617560-5b8c2e28cbf6?auto=format&amp;fit=crop&amp;w=1000&amp;q=72"
+                       alt="Piedras apiladas en equilibrio" loading="lazy" decoding="async">
+                </span>
+              </span>
               <span class="eyebrow eyebrow--sm eyebrow--pale" style="display:block;margin-bottom:14px">04 · Proceso</span>
-              <h3 class="display svc-wide__title"><a href="/acompanamiento" data-link="acompanamiento">Acompañamiento de crecimiento personal</a></h3>
-              <p class="svc-wide__copy">Cuando lo que necesitas no es una sesión suelta, sino un cambio sostenido. Un proceso para transformar tu vida, fortalecer tu autoestima, sanar heridas emocionales y desarrollar una nueva mirada sobre ti misma. Reúne los tres caminos de arriba y los pone al servicio de tu momento.</p>
-              <a class="svc-wide__more" href="/acompanamiento" data-link="acompanamiento">Conocer más <span aria-hidden="true">→</span></a>
+              <h3 class="display svc-card__title"><a class="svc-card__link" href="/acompanamiento" data-link="acompanamiento">Acompañamiento de crecimiento personal</a></h3>
+              <span class="svc-card__copy" style="display:block">Cuando no necesitas una sesión suelta sino un cambio sostenido: autoestima, heridas antiguas y una mirada nueva sobre ti.</span>
+              <span class="svc-card__more">Conocer más <span class="svc-card__arrow" aria-hidden="true">→</span></span>
             </div>
-            <div class="svc-wide__side">
-              <p class="svc-wide__meta">90 minutos · online o presencial</p>
-              <p class="svc-wide__price">95 €<span>por sesión</span></p>
-              <button class="btn btn--paper btn--sm" type="button" data-open-booking>Reservar <span aria-hidden="true">→</span></button>
-            </div>
+
           </div>
         </div>
       </section>
@@ -585,23 +584,37 @@
             <button class="btn btn--lg" type="button" data-open-booking data-rv="up" data-rv-d="180" style="--ty:20px;--o-dur:.8s;--t-dur:.8s">Reservar sesión <span aria-hidden="true">→</span></button>
           </div>
 
-          <div class="grid grid--start" style="--min:300px;--gap:56px;margin-top:96px">
-            <div data-rv="up">
-              <h3 class="display sub-h3--lg" style="margin:0 0 22px">Cómo se reserva</h3>
-              <div class="rowlist">
-                <div class="rowlist__row">Me escribes por WhatsApp, Instagram o desde el formulario contándome en dos líneas qué te trae.</div>
-                <div class="rowlist__row">Te confirmo el hueco y te digo cómo abonar la sesión. Hasta ahí no hay ningún compromiso.</div>
-                <div class="rowlist__row">Recibes la confirmación con el enlace de la videollamada o con la dirección.</div>
-                <div class="rowlist__row">Si no sabes cuál elegir, escríbeme igual: lo vemos juntas antes de reservar nada.</div>
+          <div class="acor">
+            <div class="faq__item faq__item--wide" data-rv="up">
+              <button class="faq__btn" type="button" aria-expanded="false" aria-controls="acor-reserva">
+                <span class="display faq__q">Cómo se reserva</span>
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__body" id="acor-reserva">
+                <div class="faq__inner">
+                  <div class="rowlist">
+                    <div class="rowlist__row">Me escribes por WhatsApp, Instagram o desde el formulario contándome en dos líneas qué te trae.</div>
+                    <div class="rowlist__row">Te confirmo el hueco y te digo cómo abonar la sesión. Hasta ahí no hay ningún compromiso.</div>
+                    <div class="rowlist__row">Recibes la confirmación con el enlace de la videollamada o con la dirección.</div>
+                    <div class="rowlist__row">Si no sabes cuál elegir, escríbeme igual: lo vemos juntas antes de reservar nada.</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div data-rv="up" data-rv-d="120">
-              <h3 class="display sub-h3--lg" style="margin:0 0 22px">Condiciones</h3>
-              <div class="rowlist">
-                <div class="rowlist__row rowlist__row--split"><span>Primera sesión</span><span>Reserva los 90 min: hay que conocerse</span></div>
-                <div class="rowlist__row rowlist__row--split"><span>Frecuencia</span><span>Cada 2–4 semanas, sin permanencia</span></div>
-                <div class="rowlist__row rowlist__row--split"><span>Cancelaciones</span><span>Avisa con 24 h y la movemos sin coste</span></div>
-                <div class="rowlist__row rowlist__row--split"><span>Confidencialidad</span><span>Absoluta, siempre</span></div>
+            <div class="faq__item faq__item--wide" data-rv="up" data-rv-d="80">
+              <button class="faq__btn" type="button" aria-expanded="false" aria-controls="acor-condiciones">
+                <span class="display faq__q">Condiciones</span>
+                <span class="faq__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq__body" id="acor-condiciones">
+                <div class="faq__inner">
+                  <div class="rowlist">
+                    <div class="rowlist__row rowlist__row--split"><span>Primera sesión</span><span>Reserva los 90 min: hay que conocerse</span></div>
+                    <div class="rowlist__row rowlist__row--split"><span>Frecuencia</span><span>Cada 2–4 semanas, sin permanencia</span></div>
+                    <div class="rowlist__row rowlist__row--split"><span>Cancelaciones</span><span>Avisa con 24 h y la movemos sin coste</span></div>
+                    <div class="rowlist__row rowlist__row--split"><span>Confidencialidad</span><span>Absoluta, siempre</span></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1807,35 +1820,107 @@
   </div>
 
   <!-- ══════════════ MODAL: FICHA DE ROSA ELENA ══════════════ -->
-  <div class="modal modal--top" id="modal-ficha" hidden>
-    <div class="modal__card ficha" role="dialog" aria-modal="true" aria-labelledby="ficha-title">
-      <button class="modal__close" type="button" data-close-modal>Cerrar ✕</button>
-      <div class="grid" style="--min:260px;--gap:42px">
-        <div>
-          <div class="media ficha__media">
-            <div>
-              <picture>
-                <source srcset="/assets/img/rosa-elena.webp" type="image/webp">
-                <img src="/assets/img/rosa-elena.jpg" alt="Retrato de Rosa Elena Palomino" loading="lazy" decoding="async">
-              </picture>
-            </div>
-          </div>
-          <h2 class="display ficha__name" id="ficha-title">Rosa Elena Palomino</h2>
-          <p class="ficha__role">Coach espiritual · Consteladora familiar · Tarot evolutivo · Meditación</p>
-          <button class="btn btn--xs" type="button" data-open-booking style="margin-top:22px">Reservar sesión <span aria-hidden="true">→</span></button>
+  <!-- ══════════════ MI HISTORIA A PANTALLA COMPLETA ══════════════ -->
+  <div class="historia" id="historia" role="dialog" aria-modal="true" aria-labelledby="historia-nombre" hidden>
+
+    <div class="historia__progress" aria-hidden="true"><span class="historia__progress-bar" id="historia-progreso"></span></div>
+
+    <button class="historia__close" type="button" data-close-historia>Cerrar <span aria-hidden="true">✕</span></button>
+
+    <div class="historia__cols">
+
+      <aside class="historia__aside">
+        <div class="historia__portrait">
+          <picture>
+            <source srcset="/assets/img/rosa-elena.webp" type="image/webp">
+            <img src="/assets/img/rosa-elena.jpg" alt="Retrato de Rosa Elena Palomino" decoding="async">
+          </picture>
+          <span class="historia__veil" aria-hidden="true"></span>
         </div>
-        <div>
-          <p class="ficha__label" style="letter-spacing:.3em">Mi historia</p>
-          <p class="ficha__bio">No elegí este camino porque mi vida fuera fácil. Lo elegí porque durante muchos años tuve que aprender a transformar mi propio dolor en una oportunidad de crecimiento.</p>
-          <p class="ficha__bio">Nací en Juan José Castelli, en la provincia del Chaco, Argentina, en una familia sencilla donde aprendí el valor del trabajo, la resiliencia y la importancia de levantarse una y otra vez, incluso cuando la vida parecía derrumbarse. Fui madre siendo muy joven y crié a mi hijo Brian con mucho amor, atravesando momentos de soledad, desafíos y grandes responsabilidades. Él fue una de las fuerzas que me impulsó a seguir adelante y a descubrir que siempre existe un motivo para volver a empezar.</p>
-          <p class="ficha__bio">Con el paso de los años comprendí que muchas de las heridas que vivía en mis relaciones no empezaban allí: tenían raíces más profundas. Esa búsqueda me llevó a estudiar durante más de quince años el tarot evolutivo, las constelaciones familiares, la meditación y el desarrollo espiritual. No estudié estas disciplinas únicamente para acompañar a otras personas: primero las necesité para comprender mi propia historia y sanar mis heridas.</p>
-          <p class="ficha__bio">En 2024 tomé una de las decisiones más importantes de mi vida: dejar Argentina y empezar una nueva etapa en Madrid. Dejé atrás mi país, mi familia y muchas certezas. Ese cambio me enseñó que el verdadero hogar empieza a construirse dentro de una misma.</p>
-          <p class="ficha__bio">En 2025 la vida volvió a transformarme con una de las pérdidas más profundas que puede vivir una hija: el fallecimiento de mi padre, Sebastián Palomino. Su partida me enfrentó al dolor del duelo, pero también me llevó a reconciliarme con mis raíces, con mi historia familiar y con la importancia de honrar a quienes nos dieron la vida.</p>
-          <p class="ficha__bio">Hoy comprendo que cada experiencia —las alegrías, las pérdidas, los comienzos y los finales— me preparó para cumplir mi propósito. Así nació Sanar con Amor: un espacio para acompañar a quienes desean transformar su dolor en fuerza, comprender su historia familiar, recuperar su paz interior y descubrir que nunca es tarde para volver a empezar.</p>
-          <div class="grid" style="--min:200px;--gap:36px;margin-top:36px">
+
+        <div class="historia__id">
+          <p class="historia__eyebrow">Mi historia</p>
+          <p class="display historia__name" id="historia-nombre">Rosa Elena Palomino</p>
+          <p class="historia__role">Coach espiritual · Consteladora familiar</p>
+        </div>
+
+        <!-- El reproductor solo aparece si el archivo existe: mientras no haya
+             grabación, esta parte no se pinta. Ver SITIO.md. -->
+        <div class="player" id="player" hidden>
+          <!-- Sin src: lo pone el JS la primera vez que se abre la capa, para
+               no pedir el archivo (ni fallar con un 404 mientras no exista) en
+               cada carga de la página. -->
+          <audio id="player-audio" preload="none"></audio>
+          <button class="player__play" id="player-play" type="button" aria-label="Escuchar mi historia">
+            <span class="player__tri" aria-hidden="true"></span>
+            <span class="player__pause" aria-hidden="true"></span>
+          </button>
+          <div class="player__body">
+            <p class="player__label">Escúchala en mi voz</p>
+            <div class="player__bar" id="player-bar" role="slider" tabindex="0"
+                 aria-label="Posición de la grabación" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <span class="player__wave" id="player-wave" aria-hidden="true"></span>
+              <span class="player__mask" id="player-mask" aria-hidden="true"></span>
+            </div>
+            <p class="player__time"><span id="player-cur">0:00</span><span id="player-dur">–:––</span></p>
+          </div>
+        </div>
+
+        <nav class="historia__nav" aria-label="Capítulos">
+          <button class="historia__cap" type="button" data-cap="cap-1"><span>01</span>El punto de partida</button>
+          <button class="historia__cap" type="button" data-cap="cap-2"><span>02</span>Madre muy joven</button>
+          <button class="historia__cap" type="button" data-cap="cap-3"><span>03</span>La búsqueda</button>
+          <button class="historia__cap" type="button" data-cap="cap-4"><span>04</span>Madrid, 2024</button>
+          <button class="historia__cap" type="button" data-cap="cap-5"><span>05</span>El duelo, 2025</button>
+          <button class="historia__cap" type="button" data-cap="cap-6"><span>06</span>Hoy</button>
+        </nav>
+      </aside>
+
+      <div class="historia__doc" id="historia-doc">
+        <div class="historia__inner">
+
+          <p class="historia__kicker">Rosa Elena Palomino · Fundadora de Sanar con Amor</p>
+          <p class="display historia__lead">No elegí este camino porque mi vida fuera fácil. Lo elegí porque durante muchos años tuve que aprender a transformar mi propio dolor en una oportunidad de crecimiento.</p>
+
+          <section class="cap" id="cap-1">
+            <p class="cap__label"><span class="cap__n">01</span>El punto de partida</p>
+            <p>Nací en Juan José Castelli, en la provincia del Chaco, Argentina, en una familia sencilla donde aprendí el valor del trabajo, la resiliencia y la importancia de levantarse una y otra vez, incluso cuando la vida parecía derrumbarse.</p>
+          </section>
+
+          <section class="cap" id="cap-2">
+            <p class="cap__label"><span class="cap__n">02</span>Madre muy joven</p>
+            <p>Fui madre siendo muy joven y crié a mi hijo Brian con mucho amor, atravesando momentos de soledad, desafíos y grandes responsabilidades.</p>
+            <p>Él fue una de las fuerzas que me impulsó a seguir adelante y a descubrir que siempre existe un motivo para volver a empezar.</p>
+          </section>
+
+          <section class="cap" id="cap-3">
+            <p class="cap__label"><span class="cap__n">03</span>La búsqueda</p>
+            <p>Con el paso de los años comprendí que muchas de las heridas que vivía en mis relaciones no empezaban allí: tenían raíces más profundas. Esa búsqueda me llevó a estudiar durante más de quince años el tarot evolutivo, las constelaciones familiares, la meditación y el desarrollo espiritual.</p>
+            <p>No estudié estas disciplinas únicamente para acompañar a otras personas: primero las necesité para comprender mi propia historia y sanar mis heridas.</p>
+          </section>
+
+          <section class="cap" id="cap-4">
+            <p class="cap__label"><span class="cap__n">04</span>Madrid, 2024</p>
+            <p>En 2024 tomé una de las decisiones más importantes de mi vida: dejar Argentina y empezar una nueva etapa en Madrid. Dejé atrás mi país, mi familia y muchas certezas.</p>
+            <blockquote class="cap__quote">El verdadero hogar empieza a construirse dentro de una misma.</blockquote>
+          </section>
+
+          <section class="cap" id="cap-5">
+            <p class="cap__label"><span class="cap__n">05</span>El duelo, 2025</p>
+            <p>En 2025 la vida volvió a transformarme con una de las pérdidas más profundas que puede vivir una hija: el fallecimiento de mi padre, Sebastián Palomino.</p>
+            <p>Su partida me enfrentó al dolor del duelo, pero también me llevó a reconciliarme con mis raíces, con mi historia familiar y con la importancia de honrar a quienes nos dieron la vida.</p>
+          </section>
+
+          <section class="cap" id="cap-6">
+            <p class="cap__label"><span class="cap__n">06</span>Hoy</p>
+            <p>Hoy comprendo que cada experiencia —las alegrías, las pérdidas, los comienzos y los finales— me preparó para cumplir mi propósito.</p>
+            <p>Así nació Sanar con Amor: un espacio para acompañar a quienes desean transformar su dolor en fuerza, comprender su historia familiar, recuperar su paz interior y descubrir que nunca es tarde para volver a empezar.</p>
+          </section>
+
+          <div class="historia__meta">
             <div>
-              <p class="ficha__label">Métodos</p>
-              <ul class="ficha__methods">
+              <p class="historia__meta-label">Métodos</p>
+              <ul class="historia__methods">
                 <li>Constelaciones familiares</li>
                 <li>Tarot evolutivo</li>
                 <li>Meditación guiada</li>
@@ -1844,18 +1929,19 @@
               </ul>
             </div>
             <div>
-              <p class="ficha__label">Mi camino</p>
-              <div class="ficha__years">
-                <div class="ficha__year"><span>Chaco</span><span>Juan José Castelli, Argentina: donde empieza mi historia</span></div>
-                <div class="ficha__year"><span>+15 años</span><span>Estudio y práctica de tarot evolutivo, constelaciones, meditación y desarrollo espiritual</span></div>
-                <div class="ficha__year"><span>2024</span><span>Emigro a Madrid y vuelvo a empezar</span></div>
-                <div class="ficha__year"><span>2025</span><span>El duelo por mi padre me reconcilia con mis raíces</span></div>
-                <div class="ficha__year"><span>Hoy</span><span>Sanar con Amor, online y presencial</span></div>
-              </div>
+              <p class="historia__meta-label">Formación</p>
+              <p class="historia__meta-copy">Más de quince años de estudio y práctica en tarot evolutivo, constelaciones familiares, meditación y desarrollo espiritual.</p>
             </div>
           </div>
+
+          <div class="historia__cta">
+            <p class="display historia__cta-title">Si algo de esto te resuena, hablemos.</p>
+            <button class="btn btn--lg" type="button" data-open-booking>Reservar sesión <span aria-hidden="true">→</span></button>
+          </div>
+
         </div>
       </div>
+
     </div>
   </div>
 
@@ -2071,6 +2157,6 @@
 
 </div>
 
-<script src="/assets/js/site.js?v=20260727b" defer></script>
+<script src="/assets/js/site.js?v=20260727d" defer></script>
 </body>
 </html>

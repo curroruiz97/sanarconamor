@@ -39,6 +39,7 @@ assets/
   css/site.css        Sistema visual: paleta, tipografía, componentes
   js/site.js          Precarga, rutas, revelados, parallax y reservas
   img/                Solo lo que se sirve: loto, iconos y retratos
+  audio/              Grabación de «Mi historia» (ver su LEEME.md)
 fuentes/              Originales a tamaño completo, para regenerar recortes
 dev.py                Servidor local con las reescrituras de Vercel
 favicon.ico           Icono del sitio (el loto sobre verde)
@@ -58,6 +59,12 @@ Están en tres sitios y hay que cambiarlos en los tres a la vez:
   el pie, la página de contacto y el menú móvil.
 - **`assets/js/site.js`** — la tabla `SERVICIOS` y las constantes `WHATSAPP`,
   `CORREO` e `INSTAGRAM`, al principio del bloque de reservas.
+
+## Al tocar el CSS o el JS
+
+Hay que subir el `?v=` del `<link>` y del `<script>` de `index.html`. Los
+recursos se sirven con un año de caché inmutable, así que sin cambiar la
+dirección los cambios no llegan a quien ya haya visitado la web.
 
 El detalle de qué gobierna cada cosa está en [`SITIO.md`](SITIO.md).
 

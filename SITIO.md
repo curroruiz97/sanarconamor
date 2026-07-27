@@ -64,11 +64,12 @@ Son cuatro, con los precios de España que dio Rosa Elena:
 | Meditación guiada | 45–60 min | Solo online | 35 € |
 | Acompañamiento de crecimiento personal | 90 min | Online o presencial | 95 € |
 
-Los cuatro tienen página propia. Los tres primeros son disciplinas y aparecen
-como tarjetas en «Acompañamientos»; el cuarto es un proceso que las combina, así
-que ocupa una banda ancha bajo las tres tarjetas (`.svc-wide`) en vez de una
-cuarta columna. La jerarquía es deliberada: «tres caminos» sigue siendo cierto y
-la banda dice, con la forma, que el acompañamiento va por encima de los tres.
+Los cuatro tienen página propia y aparecen como tarjetas iguales en
+«Acompañamientos», en una rejilla de dos por dos. Hubo una versión intermedia en
+la que el cuarto ocupaba una banda ancha bajo los otros tres, por aquello de que
+es un proceso y no una disciplina; se descartó porque rompía la simetría sin
+ganar nada. Lo que lo distingue ahora es su etiqueta —«Proceso»— en la lista de
+tarifas.
 
 Al añadir una página hay que tocar cinco sitios: el `<main data-page="…">` en
 `index.html`, `ROUTES` en `assets/js/site.js`, `vercel.json`, `_redirects` y los
@@ -136,6 +137,34 @@ acompañamiento → día y hora → datos → confirmación.
   ponerla ahí y en el modal.
 - **Datos fiscales de Rosa Elena** — ver el apartado siguiente. Es lo que
   bloquea publicar el aviso legal y la privacidad.
+
+## Caché de los recursos
+
+`vercel.json` sirve `/assets` con `Cache-Control: immutable` y un año de
+validez, y los archivos no llevan huella en el nombre. **Por eso el `<link>` y
+el `<script>` de `index.html` acaban en `?v=` y hay que subir ese número en cada
+cambio de `site.css` o `site.js`.** Si no, quien ya haya visitado la web se
+queda con la versión vieja durante un año y no ve ningún cambio de estilos. Pasó
+una vez y cuesta de diagnosticar, porque el servidor sirve el archivo nuevo
+correctamente y el fallo solo se ve en el navegador de quien ya había entrado.
+
+## Mi historia
+
+La capa de «Mi historia» ocupa la pantalla entera (`.historia`), no es un modal
+pequeño: retrato fijo a la izquierda con la identidad, el reproductor y el
+índice; a la derecha el relato en seis capítulos, con barra de progreso de
+lectura arriba y el capítulo en curso iluminado en el índice. Por debajo de
+980 px el retrato pasa a ser la portada y el índice se retira.
+
+El reproductor **solo se pinta si existe `assets/audio/mi-historia.mp3`**. El
+`<audio>` sale del HTML sin `src`: lo pone el JS la primera vez que se abre la
+capa, para no pedir el archivo en cada carga ni dejar un 404 mientras no esté.
+Las instrucciones para grabarlo están en `assets/audio/LEEME.md`.
+
+La onda del reproductor son 56 barras de altura fija, calculadas con senos: no
+es la forma real del audio, es un dibujo estable. El progreso se ve tapando por
+la izquierda con una máscara del color del fondo, así no hay que repintar nada
+en cada fotograma.
 
 ## Aviso legal y privacidad
 

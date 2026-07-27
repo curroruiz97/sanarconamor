@@ -314,7 +314,7 @@
   }
 
   function anyOverlayVisible() {
-    return [$('#menu'), $('#modal-aviso'), $('#modal-ficha'), $('#booking')]
+    return [$('#menu'), $('#modal-aviso'), $('#historia'), $('#booking')]
       .some(function (el) { return el && !el.hidden; });
   }
 
@@ -354,10 +354,8 @@
   }
 
   function closeModals() {
-    ['modal-aviso', 'modal-ficha'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.hidden = true;
-    });
+    var el = document.getElementById('modal-aviso');
+    if (el) el.hidden = true;
     syncLock();
   }
 
@@ -370,9 +368,163 @@
   function closeAllOverlays() {
     closeMenu(true);
     closeModals();
+    closeHistoria();
     closeBooking();
     setDrop(false);
     syncLock();
+  }
+
+  /* ────────────────────────────────────────────────────────────────────────
+     Mi historia: capa a pantalla completa
+
+     Índice de capítulos que se ilumina al desplazarse, barra de progreso de
+     lectura y reproductor de la grabación. El reproductor se queda oculto
+     mientras no exista /assets/audio/mi-historia.mp3, para que la ausencia
+     del archivo no deje controles que no suenan.
+     ──────────────────────────────────────────────────────────────────────── */
+
+  var historia = $('#historia');
+  var audio = $('#player-audio');
+  var histArmada = false;
+
+  function openHistoria() {
+    if (!historia) return;
+    closeMenu(true);
+    closeModals();
+    historia.hidden = false;
+    armarHistoria();
+    var doc = $('#historia-doc');
+    if (doc) doc.scrollTop = 0;
+    pintarHistoria();
+    syncLock();
+  }
+
+  function closeHistoria() {
+    if (!historia || historia.hidden) return;
+    historia.hidden = true;
+    if (audio && !audio.paused) audio.pause();
+    syncLock();
+  }
+
+  function fmt(seg) {
+    if (!isFinite(seg)) return '–:––';
+    var m = Math.floor(seg / 60);
+    var s = Math.floor(seg % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function pintarAudio() {
+    if (!audio) return;
+    var dur = audio.duration;
+    var p = (isFinite(dur) && dur > 0) ? (audio.currentTime / dur) : 0;
+    var mask = $('#player-mask');
+    if (mask) mask.style.left = (p * 100) + '%';
+    var cur = $('#player-cur');
+    if (cur) cur.textContent = fmt(audio.currentTime);
+    var bar = $('#player-bar');
+    if (bar) bar.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+  }
+
+  function buscarAudio(clientX) {
+    var bar = $('#player-bar');
+    if (!bar || !audio || !isFinite(audio.duration)) return;
+    var r = bar.getBoundingClientRect();
+    var p = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+    audio.currentTime = p * audio.duration;
+    pintarAudio();
+  }
+
+  // Capítulo activo y progreso de lectura.
+  function pintarHistoria() {
+    var doc = $('#historia-doc');
+    if (!doc || !historia || historia.hidden) return;
+
+    // Por debajo de 980px el que se desplaza es el contenedor de las columnas.
+    var caja = doc.scrollHeight > doc.clientHeight + 1 ? doc : $('.historia__cols');
+    if (!caja) return;
+
+    var max = caja.scrollHeight - caja.clientHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, caja.scrollTop / max)) : 0;
+    var barra = $('#historia-progreso');
+    if (barra) barra.style.width = (p * 100) + '%';
+
+    var linea = caja.getBoundingClientRect().top + caja.clientHeight * 0.34;
+    var activo = null;
+    $$('.cap', historia).forEach(function (cap) {
+      if (cap.getBoundingClientRect().top <= linea) activo = cap.id;
+    });
+    $$('.historia__cap', historia).forEach(function (b) {
+      b.classList.toggle('is-on', b.getAttribute('data-cap') === activo);
+    });
+  }
+
+  function armarHistoria() {
+    if (histArmada || !historia) return;
+    histArmada = true;
+
+    // Onda del reproductor: alturas fijas, sin azar, para que el dibujo sea
+    // siempre el mismo y no cambie entre visitas.
+    var wave = $('#player-wave');
+    if (wave) {
+      var n = 56;
+      var html = '';
+      for (var i = 0; i < n; i++) {
+        var v = Math.sin(i * 0.7) * 0.3 + Math.sin(i * 0.31) * 0.26 + Math.sin(i * 1.9) * 0.12;
+        html += '<i style="--h:' + Math.round(34 + Math.abs(v) * 62) + '%"></i>';
+      }
+      wave.innerHTML = html;
+    }
+
+    if (audio) {
+      // El <audio> está en el documento desde el principio con preload
+      // metadata, así que para cuando se abre la capa el evento puede haber
+      // pasado ya: hay que mirar también el estado actual.
+      var listo = function () {
+        var p = $('#player');
+        if (p) p.hidden = false;
+        var d = $('#player-dur');
+        if (d) d.textContent = fmt(audio.duration);
+        pintarAudio();
+      };
+      audio.addEventListener('loadedmetadata', listo);
+      if (audio.readyState >= 1) listo();
+      // Se pide aquí, no en el HTML: si la grabación aún no está subida, el
+      // fallo ocurre una sola vez y solo para quien abra la capa.
+      audio.preload = 'metadata';
+      audio.src = AUDIO_HISTORIA;
+      audio.addEventListener('timeupdate', pintarAudio);
+      audio.addEventListener('play', function () { $('#player').classList.add('is-playing'); });
+      audio.addEventListener('pause', function () { $('#player').classList.remove('is-playing'); });
+      audio.addEventListener('ended', function () {
+        $('#player').classList.remove('is-playing');
+        audio.currentTime = 0;
+        pintarAudio();
+      });
+    }
+
+    var doc = $('#historia-doc');
+    if (doc) doc.addEventListener('scroll', pintarHistoria, { passive: true });
+    var cols = $('.historia__cols');
+    if (cols) cols.addEventListener('scroll', pintarHistoria, { passive: true });
+
+    var bar = $('#player-bar');
+    if (bar) {
+      bar.addEventListener('pointerdown', function (e) {
+        buscarAudio(e.clientX);
+        var mover = function (ev) { buscarAudio(ev.clientX); };
+        var soltar = function () {
+          window.removeEventListener('pointermove', mover);
+          window.removeEventListener('pointerup', soltar);
+        };
+        window.addEventListener('pointermove', mover);
+        window.addEventListener('pointerup', soltar);
+      });
+      bar.addEventListener('keydown', function (e) {
+        if (!audio || !isFinite(audio.duration)) return;
+        if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+      });
+    }
   }
 
   /* ────────────────────────────────────────────────────────────────────────
@@ -391,6 +543,10 @@
     'Meditación guiada':         { min: 60, durTexto: '45–60 min', precio: 35, presencial: false },
     'Acompañamiento de crecimiento personal': { min: 90, durTexto: '90 min', precio: 95, presencial: true }
   };
+
+  // Grabación de «Mi historia». Mientras el archivo no exista, la capa
+  // funciona igual y el reproductor no se pinta. Ver assets/audio/LEEME.md.
+  var AUDIO_HISTORIA = '/assets/audio/mi-historia.mp3';
 
   var WHATSAPP = '34672298203';
   var CORREO = 'sanarconamor.1@gmail.com';
@@ -838,8 +994,21 @@
       if (hit('[data-open-booking]')) { openBooking(); return; }
       if (hit('[data-close-booking]')) { closeBooking(); return; }
       if (hit('[data-open-aviso]')) { openModal('modal-aviso'); return; }
-      if (hit('[data-open-ficha]')) { openModal('modal-ficha'); return; }
+      if (hit('[data-open-ficha]')) { openHistoria(); return; }
+      if (hit('[data-close-historia]')) { closeHistoria(); return; }
       if (hit('[data-close-modal]')) { closeModals(); return; }
+
+      if (hit('#player-play')) {
+        if (audio) { audio.paused ? audio.play() : audio.pause(); }
+        return;
+      }
+
+      var cap = hit('.historia__cap');
+      if (cap) {
+        var destino = document.getElementById(cap.getAttribute('data-cap'));
+        if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
       if (hit('[data-close-menu]')) { closeMenu(); return; }
 
       // Clic en el velo: cierra la capa.
@@ -950,6 +1119,7 @@
     window.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       if (booking && !booking.hidden) { closeBooking(); return; }
+      if (historia && !historia.hidden) { closeHistoria(); return; }
       closeAllOverlays();
     });
 

@@ -8,3 +8,6 @@ SITIO.md
 
 # Servidor de desarrollo: solo se usa en local.
 dev.py
+
+# Notas dentro de carpetas de recursos.
+assets/audio/LEEME.md
