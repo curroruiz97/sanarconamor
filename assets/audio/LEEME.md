@@ -10,30 +10,53 @@ nombre exacto.
 
 ## Lo que hay ahora
 
-Una locución con voz sintética femenina (modelo Seed Audio, voz «Marisol»),
-generada a partir del mismo texto que se lee en pantalla. Dura 2:32, mono,
-96 kbps, 1,8 MB. Está normalizada a −16 LUFS y montada en siete tramos, uno por
-capítulo, con casi un segundo de silencio entre ellos para que respire.
+La grabación definitiva, subida por el cliente y procesada aquí: 2:24, mono,
+44,1 kHz, 96 kbps, 1,7 MB.
 
-Por eso el rótulo del reproductor dice **«Escucha mi historia»** y no «en mi
-voz»: la página no debe dar a entender que esa voz es la de Rosa Elena.
+Venía a −24,9 LUFS, unos ocho decibelios por debajo de lo habitual, y empezaba
+y terminaba de golpe. Lo que se le hizo:
 
-## Lo que debería haber
+- Normalizado a −16 LUFS con pico real en −1,8 dBTP, que es el estándar de voz
+  hablada en web. Sin esto se oía flojo en el móvil.
+- Filtro de graves por debajo de 75 Hz, para el retumbe de sala.
+- 0,4 s de silencio al principio y 0,8 s al final, para que no arranque ni
+  corte en seco.
+- Reencodado a 96 kbps mono: venía a 130 y se ahorran 600 KB sin diferencia
+  audible en voz hablada.
 
-La voz de Rosa Elena leyendo su propia historia. Es media hora de trabajo y
-vale más que cualquier locución: en una web que va de acompañamiento personal,
-su voz es parte de lo que se ofrece.
+El original sin tocar está en el historial de git, en el commit «Add files via
+upload».
 
-- MP3, mono, 96–128 kbps. Cuatro minutos pesan unos 3 MB, razonable en móvil.
-- Grabar con el móvil cerca de la boca en una habitación con cortinas, sofá o
-  alfombra suena mejor que un micro caro en una habitación vacía.
-- Dejar un segundo de silencio al principio y al final.
-- Sustituir este archivo por el suyo y cambiar el rótulo a «Escúchala en mi
-  voz» en `index.html` (buscar `player__label`).
+## Si hay que rehacerlo
 
-## Cómo se montó la locución actual
+Con el archivo nuevo en `/tmp/original.mp3`:
 
-Siete tramos generados por separado —uno por capítulo— y unidos después:
+```bash
+# 1. Medir
+ffmpeg -i original.mp3 -af loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json -f null -
+
+# 2. Aplicar (sustituyendo los measured_* por lo que devuelva el paso 1),
+#    pasando por WAV: encadenar adelay detrás de loudnorm sobre MP3 rompe las
+#    marcas de tiempo del primer bloque.
+ffmpeg -i original.mp3 -ac 1 -ar 44100 -c:a pcm_s16le crudo.wav
+ffmpeg -i crudo.wav -af "highpass=f=75,loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=…:measured_TP=…:measured_LRA=…:measured_thresh=…:linear=true" \
+  -ac 1 -ar 44100 -c:a pcm_s16le norm.wav
+
+# 3. Aire al principio y al final, y a MP3
+ffmpeg -f lavfi -t 0.4 -i anullsrc=r=44100:cl=mono -c:a pcm_s16le sil_ini.wav
+ffmpeg -f lavfi -t 0.8 -i anullsrc=r=44100:cl=mono -c:a pcm_s16le sil_fin.wav
+printf "file 'sil_ini.wav'\nfile 'norm.wav'\nfile 'sil_fin.wav'\n" > l.txt
+ffmpeg -f concat -safe 0 -i l.txt -ac 1 -ar 44100 -b:a 96k mi-historia.mp3
+```
+
+Y subir el `?v=` del `<link>` y el `<script>` de `index.html`, o los navegadores
+seguirán con la versión anterior.
+
+## Locución sintética anterior
+
+Antes de la grabación real hubo una locución con voz sintética femenina
+(Seed Audio, voz «Marisol»): siete tramos generados por separado, uno por
+capítulo, y unidos después.
 
 ```bash
 ffmpeg -f concat -safe 0 -i lista.txt \
