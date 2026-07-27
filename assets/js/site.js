@@ -206,9 +206,21 @@
       path: '/meditacion',
       title: 'Meditación y sanación emocional · Sanar con Amor'
     },
+    acompanamiento: {
+      path: '/acompanamiento',
+      title: 'Acompañamiento de crecimiento personal · Sanar con Amor'
+    },
     contacto: {
       path: '/contacto',
       title: 'Contacto · Sanar con Amor'
+    },
+    'aviso-legal': {
+      path: '/aviso-legal',
+      title: 'Aviso legal · Sanar con Amor'
+    },
+    privacidad: {
+      path: '/privacidad',
+      title: 'Política de privacidad · Sanar con Amor'
     }
   };
 

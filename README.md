@@ -27,13 +27,14 @@ absolutas (`/assets/…`). Hay que servir la carpeta.
 
 No necesita variables de entorno. `vercel.json` ya incluye las cabeceras de
 seguridad, la caché de los assets y las reescrituras que hacen falta para que
-`/constelaciones`, `/tarot`, `/meditacion` y `/contacto` funcionen al recargar o
-al abrirlas directamente. En Netlify, eso mismo lo cubre `_redirects`.
+`/constelaciones`, `/tarot`, `/meditacion`, `/acompanamiento`, `/contacto`,
+`/aviso-legal` y `/privacidad` funcionen al recargar o al abrirlas
+directamente. En Netlify, eso mismo lo cubre `_redirects`.
 
 ## Estructura
 
 ```
-index.html            Las cinco páginas, los modales y el sistema de reservas
+index.html            Las ocho páginas, los modales y el sistema de reservas
 assets/
   css/site.css        Sistema visual: paleta, tipografía, componentes
   js/site.js          Precarga, rutas, revelados, parallax y reservas
@@ -60,9 +61,14 @@ Están en tres sitios y hay que cambiarlos en los tres a la vez:
 
 El detalle de qué gobierna cada cosa está en [`SITIO.md`](SITIO.md).
 
-Las cinco páginas viven en un solo HTML y se muestran u ocultan al navegar, sin
+Las ocho páginas viven en un solo HTML y se muestran u ocultan al navegar, sin
 recargar, conservando la transición de cortina. Cada una tiene su propia
 dirección y su propio título.
+
+`/aviso-legal` y `/privacidad` existen pero **todavía no se enlazan desde el
+pie**: les faltan el nombre fiscal, el NIF y el domicilio de Rosa Elena, que
+aparecen marcados en rojo dentro de la página. El enlace del pie está escrito y
+comentado, listo para descomentar en cuanto estén los datos.
 
 Las imágenes de `assets/img/` están ajustadas al tamaño en que se muestran. Los
 originales viven en `fuentes/` y no se publican: si hace falta rehacer un

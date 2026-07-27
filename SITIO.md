@@ -64,11 +64,15 @@ Son cuatro, con los precios de España que dio Rosa Elena:
 | Meditación guiada | 45–60 min | Solo online | 35 € |
 | Acompañamiento de crecimiento personal | 90 min | Online o presencial | 95 € |
 
-Los tres primeros tienen página propia y aparecen como tarjetas en
-«Acompañamientos». El cuarto es un proceso, no una disciplina, así que ocupa una
-banda ancha bajo las tres tarjetas (`.svc-wide`) en vez de una cuarta columna
-que rompería la simetría con las tres páginas. Si algún día tiene página propia,
-lo natural es convertirlo en una cuarta tarjeta y retirar la banda.
+Los cuatro tienen página propia. Los tres primeros son disciplinas y aparecen
+como tarjetas en «Acompañamientos»; el cuarto es un proceso que las combina, así
+que ocupa una banda ancha bajo las tres tarjetas (`.svc-wide`) en vez de una
+cuarta columna. La jerarquía es deliberada: «tres caminos» sigue siendo cierto y
+la banda dice, con la forma, que el acompañamiento va por encima de los tres.
+
+Al añadir una página hay que tocar cinco sitios: el `<main data-page="…">` en
+`index.html`, `ROUTES` en `assets/js/site.js`, `vercel.json`, `_redirects` y los
+enlaces (desplegable de la cabecera, menú móvil y pie).
 
 Ella habló de «precio España», lo que da a entender que hay otra tarifa para
 Argentina. Como no la tenemos, la sección lo dice en una nota y ofrece
@@ -111,13 +115,32 @@ acompañamiento → día y hora → datos → confirmación.
 - **Resto de fotos propias** — el retrato de Rosa Elena ya es suyo; las demás
   imágenes siguen siendo de stock (Unsplash). Para sustituir una, basta con
   cambiar su `src` y su `alt`.
-- **Página del acompañamiento de crecimiento personal** — hoy no tiene una,
-  a diferencia de los otros tres servicios.
 - **Círculo de constelaciones en grupo** — el aviso de la portada dice «en
   preparación» y recoge interesadas por WhatsApp. Cuando haya fecha, hay que
   ponerla ahí y en el modal.
-- **Aviso legal y política de privacidad** — no existen todavía. El formulario
-  no guarda nada, pero el pie debería enlazarlos.
+- **Datos fiscales de Rosa Elena** — ver el apartado siguiente. Es lo que
+  bloquea publicar el aviso legal y la privacidad.
+
+## Aviso legal y privacidad
+
+Las dos páginas están escritas (`/aviso-legal` y `/privacidad`) pero **no se
+enlazan todavía**: faltan tres datos y quedan marcados en rojo con la clase
+`.pendiente`.
+
+- Nombre fiscal completo
+- NIF o NIE
+- Domicilio fiscal
+
+Aparecen seis veces, tres en cada página. En cuanto estén, se sustituyen y se
+descomenta el bloque `.footer__legal` del pie, que ya está escrito justo
+debajo del copyright.
+
+Son textos estándar de LSSI-CE y RGPD adaptados a este sitio, no un dictamen
+jurídico: conviene que los revise alguien de derecho antes de publicarlos. Lo
+que sí es exacto es la parte técnica —el sitio no tiene servidor, no usa
+cookies ni analítica, y lo único que guarda es el borrador de la reserva en el
+almacenamiento local del navegador—, así que la política de privacidad puede
+permitirse ser corta y decir la verdad.
 
 ## Formularios
 
