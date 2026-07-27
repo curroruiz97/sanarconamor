@@ -546,7 +546,12 @@
 
   // Grabación de «Mi historia». Mientras el archivo no exista, la capa
   // funciona igual y el reproductor no se pinta. Ver assets/audio/LEEME.md.
-  var AUDIO_HISTORIA = '/assets/audio/mi-historia.mp3';
+  //
+  // El ?v= es obligatorio y HAY QUE SUBIRLO AL CAMBIAR LA GRABACIÓN. /assets se
+  // sirve con un año de caché inmutable, así que sin cambiar la dirección quien
+  // ya haya escuchado una versión se queda con ella para siempre, por mucho que
+  // el archivo del servidor sea otro. Pasó con la locución anterior.
+  var AUDIO_HISTORIA = '/assets/audio/mi-historia.mp3?v=2';
 
   var WHATSAPP = '34672298203';
   var CORREO = 'sanarconamor.1@gmail.com';

@@ -49,8 +49,17 @@ printf "file 'sil_ini.wav'\nfile 'norm.wav'\nfile 'sil_fin.wav'\n" > l.txt
 ffmpeg -f concat -safe 0 -i l.txt -ac 1 -ar 44100 -b:a 96k mi-historia.mp3
 ```
 
-Y subir el `?v=` del `<link>` y el `<script>` de `index.html`, o los navegadores
-seguirán con la versión anterior.
+Y después, sin falta, **subir dos versiones**:
+
+- el `?v=` de `AUDIO_HISTORIA`, al principio del bloque de reservas de
+  `assets/js/site.js`;
+- el `?v=` del `<link>` y el `<script>` de `index.html`, para que llegue ese JS.
+
+`/assets` se sirve con un año de caché inmutable. Sin cambiar la dirección del
+MP3, quien ya haya escuchado una versión se queda con ella para siempre por
+mucho que el archivo del servidor sea otro. Pasó al sustituir la locución
+sintética por la grabación real: el servidor daba la nueva y los navegadores
+seguían reproduciendo la vieja.
 
 ## Locución sintética anterior
 
